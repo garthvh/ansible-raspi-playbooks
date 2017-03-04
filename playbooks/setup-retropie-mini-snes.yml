@@ -1,0 +1,65 @@
+# ansible-playbook -v -i ~/ansible/hosts /playbooks/setup-retropie-mini-snes.yml
+---
+- hosts: nesclassics
+  gather_facts: yes
+  vars:
+
+    boot_config_options:
+      # Enable audio (loads snd_bcm2835)
+      - regexp: "^#?dtparam"
+        line: "dtparam=audio=on"
+
+      # Set the GPU memory split value.
+      - regexp: "^#?gpu_mem_1024"
+        line: "gpu_mem_1024=256"
+
+      # HDMI & Screen
+      - regexp: "^#?hdmi_force_hotplug"
+        line: "hdmi_force_hotplug=1"
+      - regexp: "^#?hdmi_group"
+        line: "hdmi_group=2"
+      - regexp: "^#?hdmi_mode"
+        line: "hdmi_mode=87"
+      - regexp: "^#?hdmi_cvt"
+        line: "hdmi_cvt=1280 720 60 6 0 0 0"
+      - regexp: "^#?overscan_scale"
+        line: "overscan_scale=1"
+
+  tasks:
+
+    # Run apt-get update and apt-get upgrade 
+    - include: ../tasks/update.yml
+      tags: update
+
+    # Configure boot/config.txt values
+    - name: Configure option values in /boot/config.txt file.
+      become: yes
+      lineinfile:
+        dest: /boot/config.txt
+        regexp: "{{ item.regexp }}"
+        line: "{{ item.line }}"
+        insertafter: EOF
+        state: present
+      with_items: "{{ boot_config_options }}"
+
+    # Create Rom Share Directory
+    #- name: 
+    #  become: yes
+    #  command: mount.cifs //VHSTORE/ROMS/Systems /home/pi/RomShare/
+
+    # Mount Rom Share
+    - name: Mount Rom Share
+      become: yes
+      command: mount.cifs //VHSTORE/ROMS/Systems /home/pi/RomShare/
+
+    # synchronize roms
+    - name: synchronize roms
+      become: yes
+      synchronize: src=/RomShare/ dest=/RetroPie/roms/
+     # copy: src=/RomShare/ dest=/RetroPie/roms/
+
+  handlers:
+
+    - include: ../handlers/reboot.yml
+      tags: system
+

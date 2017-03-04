@@ -1,0 +1,12 @@
+# Expand the filesystem on the Pi
+# Depends on:
+#   handlers:
+#       handlers/reboot.yml
+#   
+
+# Expand File the System
+- name: Expand filesystem to fill disk
+  command: raspi-config --expand-rootfs
+  become: yes
+  notify:
+    - reboot

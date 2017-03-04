@@ -1,0 +1,77 @@
+# ansible-playbook -i ~/ansible/hosts /playbooks/new-default.yml
+---
+- hosts: defaultdevices
+  gather_facts: yes
+  vars:
+    wifi_country: "US"
+    locale: "en_US.UTF-8"
+    keyboard: "pc104"
+    keyboard_layout: "us"
+    timezone: America/Los_Angeles
+    locale_options:
+      # Disable Default (GB) Locale
+      - regexp: "^#?en_GB.UTF-8 UTF-8"
+        line: "# en_GB.UTF-8 UTF-8"
+      # Enable US Locale
+      - regexp: "^#?en_US.UTF-8 UTF-8"
+        line: "en_US.UTF-8 UTF-8"
+
+  vars_prompt:
+
+  - name: hostname
+    prompt: "please enter a hostname for your new device:"
+    private: no
+  - name: wifi_ssid
+    prompt: "please enter the WiFi SSID for your new device:"
+    private: no
+  - name: wifi_password
+    prompt: "please enter the WiFi password for your new device:"
+    private: yes
+  - name: ssh_key
+    prompt: "please enter the SSH Key for your new device:"
+    private: yes
+
+  tasks:
+
+    # Expand the filesystem
+    - include: ../tasks/expand-filesystem.yml
+      tags: setup
+
+    # Set Internationalization Options
+    - include: ../tasks/internationalization.yml
+      tags: setup
+
+    # Set WiFi Options
+    - include: ../tasks/wifi.yml
+      tags: setup
+
+    # Create SSH Folder
+    - name: Create SSH folder
+      file: path=~/.ssh state=directory
+
+    # Set up SSH Key from a template
+    - name: update ~/.ssh/authorized_keys file
+      template: src=../templates/authorized_keys dest=~/.ssh/authorized_keys
+
+    # run 'dpkg --configure -a'
+    - name: run 'dpkg --configure -a'
+      become: yes
+      command: dpkg --configure -a
+
+    # Run apt-get update and apt-get upgrade 
+    - include: ../tasks/update.yml
+      tags: update
+
+    # Set the hostname
+    - include: ../tasks/hostname.yml
+      tags: setup
+
+  handlers:
+
+    - include: ../handlers/reboot.yml
+      tags: system
+
+    - include: ../handlers/tzdata.yml
+      tags: system
+
+  

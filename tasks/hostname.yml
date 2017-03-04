@@ -1,0 +1,10 @@
+# Set the hostname for the Pi
+# Depends on:
+#   vars:
+#       hostname: "test-pi-nes"
+#   
+
+# Set the hostname
+- name: Set the hostname
+  become: yes
+  command: hostnamectl set-hostname "{{ hostname }}"

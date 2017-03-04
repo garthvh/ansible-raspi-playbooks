@@ -1,0 +1,94 @@
+# ansible-playbook -i ~/ansible/hosts /playbooks/setup-retropie-pi-cade.yml
+---
+- hosts: picades
+  gather_facts: yes
+  vars:
+
+    boot_config_options:
+      # Enable audio (loads snd_bcm2835)
+      - regexp: "^#?dtparam"
+        line: "dtparam=audio=on"
+
+      # Set the GPU memory split value.
+      - regexp: "^#?gpu_mem_1024"
+        line: "gpu_mem_1024=256"
+
+      # HDMI & Screen
+      - regexp: "^#?hdmi_force_hotplug"
+        line: "hdmi_force_hotplug=1"
+      - regexp: "^#?hdmi_group"
+        line: "hdmi_group=2"
+      - regexp: "^#?hdmi_mode"
+        line: "hdmi_mode=87"
+      - regexp: "^#?hdmi_cvt"
+        line: "hdmi_cvt=800 480 60 6 0 0 0"
+      - regexp: "^#?overscan_scale"
+        line: "overscan_scale=1"
+
+      # Enable 1200ma USB current to power screen
+      - regexp: "^#?max_usb_current"
+        line: "max_usb_current=1"
+
+    rc_local_options:
+      # Disable HDMI on startup (for power savings).
+      - regexp: "^/usr/local/bin/retrogame"
+        line: "/usr/local/bin/retrogame &"
+
+  tasks:
+
+    # Run apt-get update and apt-get upgrade 
+    - include: ../tasks/update.yml
+      tags: update
+
+    # Configure boot/config.txt values
+    - name: Configure option values in /boot/config.txt file.
+      become: yes
+      lineinfile:
+        dest: /boot/config.txt
+        regexp: "{{ item.regexp }}"
+        line: "{{ item.line }}"
+        insertafter: EOF
+        state: present
+      with_items: "{{ boot_config_options }}"
+
+    - name: Configure options in /etc/rc.local.
+      lineinfile:
+        dest: /etc/rc.local
+        regexp: "{{ item.regexp }}"
+        line: "{{ item.line }}"
+        insertbefore: "^exit"
+        state: present
+      with_items: "{{ rc_local_options }}"
+
+    # Download retrogame
+    - name: Download retrogame
+      become: yes
+      command: curl -f -s -o /tmp/retrogame https://raw.githubusercontent.com/adafruit/Adafruit-Retrogame/master/retrogame
+
+    # Install retrogame
+    - name: Install retrogame
+      become: yes
+      command: mv /tmp/retrogame /usr/local/bin 
+
+    # Set retrogame permissions
+    - name: Set retrogame permissions
+      become: yes
+      command: chmod 755 /usr/local/bin/retrogame 
+
+    # Put the appropriate retrogame.cfg file in place
+    - name: Put the appropriate retrogame.cfg file in place
+      become: yes
+      template: src=../templates/controllers/pi-cade.retrogame.cfg dest=/boot/retrogame.cfg
+      notify:
+        reboot
+
+    # Set up Retrogame UDEV rule
+    - name: Set up Retrogame UDEV rule
+      become: yes
+      command: echo "SUBSYSTEM==\"input\", ATTRS{name}==\"retrogame\", ENV{ID_INPUT_KEYBOARD}=\"1\"" > /etc/udev/rules.d/10-retrogame.rules
+
+  handlers:
+
+    - include: ../handlers/reboot.yml
+      tags: system
+

@@ -1,0 +1,19 @@
+# Set WiFi Options for the Pi
+# Depends on:
+#   vars:
+#       wifi:
+#           ssid: VHDEN
+#           password: grizzP@$$
+#           country: US
+#   handlers:
+#       handlers/reboot.yml
+#   templates:
+#       templates/wpa_supplicant.conf
+#    
+
+# Set up WiFi from a tempate
+- name: update wpa_supplicant file
+  become: yes
+  template: src=../templates/wpa_supplicant.conf dest=/etc/wpa_supplicant/wpa_supplicant.conf
+  notify: 
+    - reboot
