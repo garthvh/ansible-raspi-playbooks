@@ -45,15 +45,12 @@
     - include: ../tasks/wifi.yml
       tags: setup
 
-    # Create SSH Folder
     - name: Create SSH folder
       file: path=~/.ssh state=directory
 
-    # Set up SSH Key from a template
-    - name: update ~/.ssh/authorized_keys file
+    - name: Set up SSH Key from a template
       template: src=../templates/authorized_keys dest=~/.ssh/authorized_keys
 
-    # run 'dpkg --configure -a'
     - name: run 'dpkg --configure -a'
       become: yes
       command: dpkg --configure -a

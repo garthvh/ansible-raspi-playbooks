@@ -4,6 +4,9 @@
   gather_facts: yes
   vars:
 
+    smb_rom_share: //VHSTORE/ROMS
+    smb_rom_folder: Systems
+    smb_es_folder: emulationstation
     boot_config_options:
       # Enable audio (loads snd_bcm2835)
       - regexp: "^#?dtparam"
@@ -12,6 +15,22 @@
       # Set the GPU memory split value.
       - regexp: "^#?gpu_mem_1024"
         line: "gpu_mem_1024=256"
+
+      # RetroPie Reccomended Settings for Pi 3
+      - regexp: "^#?arm_freq"
+        line: "arm_freq=1300"      
+      - regexp: "^#?gpu_freq"
+        line: "gpu_freq=500"      
+      - regexp: "^#?core_freq"
+        line: "core_freq=500"      
+      - regexp: "^#?sdram_freq"
+        line: "sdram_freq=500"      
+      - regexp: "^#?sdram_schmoo"
+        line: "sdram_schmoo=0x02000020"      
+      - regexp: "^#?over_voltage"
+        line: "over_voltage=2"      
+      - regexp: "^#?sdram_over_voltage"
+        line: "sdram_over_voltage=2"
 
       # HDMI & Screen
       - regexp: "^#?hdmi_force_hotplug"
@@ -31,7 +50,12 @@
     - include: ../tasks/update.yml
       tags: update
 
-    # Configure boot/config.txt values
+    - name: Install dependancies from apt
+      become: yes
+      apt: name={{item}} state=installed
+      with_items:
+        - smbclient
+
     - name: Configure option values in /boot/config.txt file.
       become: yes
       lineinfile:
@@ -42,24 +66,10 @@
         state: present
       with_items: "{{ boot_config_options }}"
 
-    # Create Rom Share Directory
-    #- name: 
-    #  become: yes
-    #  command: mount.cifs //VHSTORE/ROMS/Systems /home/pi/RomShare/
-
-    # Mount Rom Share
-    - name: Mount Rom Share
-      become: yes
-      command: mount.cifs //VHSTORE/ROMS/Systems /home/pi/RomShare/
-
-    # synchronize roms
-    - name: synchronize roms
-      become: yes
-      synchronize: src=/RomShare/ dest=/RetroPie/roms/
-     # copy: src=/RomShare/ dest=/RetroPie/roms/
+    # Copy roms using smbclient
+    - include: ../tasks/copy-retropie-roms.yml
 
   handlers:
 
     - include: ../handlers/reboot.yml
       tags: system
-

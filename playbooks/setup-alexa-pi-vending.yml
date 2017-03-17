@@ -134,7 +134,6 @@
         job: /usr/bin/python /home/pi/vendpi/vend.py
       
     # Alexa setup info https://github.com/alexa/alexa-avs-sample-app/wiki/Raspberry-Pi
-
     - name: Get Amazon Alexa Setup Script from github
       git:
         repo: https://github.com/alexa/alexa-avs-sample-app.git

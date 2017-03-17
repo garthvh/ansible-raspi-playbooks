@@ -57,8 +57,9 @@ I have an ansible host file ~/ansible/hosts set up with all of my device hostnam
     [projects]
     astro-pi
     alexa-pi-vending
-    pi-motion-cam
-    pi-timelapse-cam
+    pi-camera-motion
+    pi-camera-timelapse
+    pix-e-gif-cam
     [projects:vars]
     ansible_user=pi
 
