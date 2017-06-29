@@ -41,8 +41,6 @@
         line: "hdmi_mode=87"
       - regexp: "^#?hdmi_cvt"
         line: "hdmi_cvt=1280 720 60 6 0 0 0"
-      - regexp: "^#?overscan_scale"
-        line: "overscan_scale=1"
 
   tasks:
 
