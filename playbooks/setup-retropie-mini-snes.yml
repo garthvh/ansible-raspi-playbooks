@@ -36,11 +36,9 @@
       - regexp: "^#?hdmi_force_hotplug"
         line: "hdmi_force_hotplug=1"
       - regexp: "^#?hdmi_group"
-        line: "hdmi_group=2"
+        line: "hdmi_group=1"
       - regexp: "^#?hdmi_mode"
-        line: "hdmi_mode=87"
-      - regexp: "^#?hdmi_cvt"
-        line: "hdmi_cvt=1280 720 60 6 0 0 0"
+        line: "hdmi_mode=62"
 
   tasks:
 
