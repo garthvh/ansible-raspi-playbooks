@@ -47,6 +47,8 @@
         line: "overscan_top=-5"
       - regexp: "^#?overscan_bottom"
         line: "overscan_bottom=-5"
+      - regexp: "^#?overscan_scale"
+        line: "overscan_scale=1"
 
   tasks:
 
