@@ -32,13 +32,13 @@
       - regexp: "^#?sdram_over_voltage"
         line: "sdram_over_voltage=2"
 
-      # HDMI & Screen
+      # HDMI & Screen // Group 1 Mode 4 - 720P 60Hz
       - regexp: "^#?hdmi_force_hotplug"
         line: "hdmi_force_hotplug=1"
       - regexp: "^#?hdmi_group"
         line: "hdmi_group=1"
       - regexp: "^#?hdmi_mode"
-        line: "hdmi_mode=62"
+        line: "hdmi_mode=4"
       - regexp: "^#?overscan_left"
         line: "overscan_left=-5"
       - regexp: "^#?overscan_right"
