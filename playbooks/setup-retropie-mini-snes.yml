@@ -39,6 +39,14 @@
         line: "hdmi_group=1"
       - regexp: "^#?hdmi_mode"
         line: "hdmi_mode=62"
+      - regexp: "^#?overscan_left"
+        line: "overscan_left=-5"
+      - regexp: "^#?overscan_right"
+        line: "overscan_right=-5"
+      - regexp: "^#?overscan_top"
+        line: "overscan_top=-5"
+      - regexp: "^#?overscan_bottom"
+        line: "overscan_bottom=-5"
 
   tasks:
 
