@@ -14,21 +14,21 @@
       command: eopkg bi --ignore-safety https://raw.githubusercontent.com/solus-project/3rd-party/master/desktop/font/mscorefonts/pspec.xml
     - name: Install Microsoft fonts
       become: yes
-      command: eopkg it mscorefonts*.eopkg;sudo rm mscorefonts*.eopkg
+      command: eopkg it mscorefonts*.eopkg;rm mscorefonts*.eopkg
 
     - name: Download Google Chrome spec
       become: yes
       command: eopkg bi --ignore-safety eopkg bi --ignore-safety https://raw.githubusercontent.com/solus-project/3rd-party/master/network/web/browser/google-chrome-stable/pspec.xml
     - name: Install Google Chrome
       become: yes
-      command: eopkg it google-chrome-*.eopkg;sudo rm google-chrome-*.eopkg
+      command: eopkg it google-chrome-*.eopkg;rm google-chrome-*.eopkg
 
     - name: Download Skype for Linux spec
       become: yes
       command: eopkg bi --ignore-safety https://raw.githubusercontent.com/solus-project/3rd-party/master/network/im/skype/pspec.xml
     - name: Install Skype for Linux
       become: yes
-      command: sudo eopkg it skype*.eopkg;sudo rm *.eopkg
+      command: sudo eopkg it skype*.eopkg;rm *.eopkg
 
     # Git 
     - name: Install Git
