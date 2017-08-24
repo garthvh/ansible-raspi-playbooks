@@ -47,6 +47,7 @@
       become: yes
       command: git config --global color.ui auto
 
+    # Development
     - name: Install VS Code
       become: yes
       command: eopkg install vscode
@@ -56,6 +57,13 @@
     - name: Install Angry IP Scanner
       become: yes
       command: eopkg install ipscan
+    - name: Install system.devel
+      become: yes
+      command: eopkg install -c system.devel
+    - name: Upgrade all the things
+      become: yes
+      command: sudo eopkg upgrade
+
 
   handlers:
 
