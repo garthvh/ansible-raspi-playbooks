@@ -76,8 +76,8 @@
     - name: Install Fritzing
       become: yes
       command: eopkg install fritzing
-      //Cura
-      //SLi3r Prusa Editions
+      #Cura
+      #SLi3r Prusa Editions
 
 
   handlers:
