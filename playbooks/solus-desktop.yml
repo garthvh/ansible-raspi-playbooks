@@ -62,10 +62,10 @@
     - name: Install Cheese Photo Booth
       become: yes
       command: eopkg install cheese
-          - name: Install The Gimp
+    - name: Install The Gimp
       become: yes
       command: eopkg install gimp
-                - name: Install gLabels
+    - name: Install gLabels
       become: yes
       command: eopkg install glabels
 
