@@ -1,7 +1,7 @@
 
 # ansible-playbook -i ~/ansible/hosts /playbooks/solus-desktop.yml
 ---
-- hosts: linuxboxes
+- hosts: solus
   gather_facts: yes
   vars:
     wifi_country: "US"
@@ -33,12 +33,6 @@
       command: sudo eopkg it skype*.eopkg
       ignore_errors: yes
 
-    - name: Clean up anything we downloaded
-      become: yes
-      command: rm *.eopkg
-      ignore_errors: yes
-      
-
     # Git 
     - name: Install Git
       become: yes
@@ -62,7 +56,19 @@
       command: eopkg install -c system.devel
     - name: Upgrade all the things
       become: yes
-      command: sudo eopkg upgrade
+      command: eopkg upgrade
+
+      # Media
+    - name: Install Cheese Photo Booth
+      become: yes
+      command: eopkg install cheese
+          - name: Install The Gimp
+      become: yes
+      command: eopkg install gimp
+                - name: Install gLabels
+      become: yes
+      command: eopkg install glabels
+
 
 
   handlers:
