@@ -1,1 +1,33 @@
 
+# ansible-playbook -i ~/ansible/hosts /playbooks/solus-desktop.yml
+---
+- hosts: defaultdevices
+  gather_facts: yes
+  vars:
+    wifi_country: "US"
+
+  vars_prompt:
+
+  - name: ssh_key
+    prompt: "please enter the SSH Key for your new device:"
+    private: yes
+
+  tasks:
+
+    - name: Create SSH folder
+      file: path=~/.ssh state=directory
+
+    - name: Set up SSH Key from a template
+      template: src=../templates/authorized_keys dest=~/.ssh/authorized_keys
+
+    - name: run 'dpkg --configure -a'
+      become: yes
+      command: dpkg --configure -a
+
+
+  handlers:
+
+    - include: ../handlers/reboot.yml
+      tags: system
+
+  
