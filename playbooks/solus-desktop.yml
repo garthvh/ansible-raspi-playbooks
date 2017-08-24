@@ -14,7 +14,7 @@
       command: eopkg bi --ignore-safety https://raw.githubusercontent.com/solus-project/3rd-party/master/desktop/font/mscorefonts/pspec.xml
     - name: Install Microsoft fonts
       become: yes
-      command: sudo eopkg it mscorefonts*.eopkg;sudo rm mscorefonts*.eopkg
+      command: eopkg it mscorefonts*.eopkg;sudo rm mscorefonts*.eopkg
 
     - name: Download Google Chrome spec
       become: yes
