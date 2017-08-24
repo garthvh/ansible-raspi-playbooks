@@ -1,7 +1,7 @@
 
 # ansible-playbook -i ~/ansible/hosts /playbooks/solus-desktop.yml
 ---
-- hosts: defaultdevices
+- hosts: linuxboxes
   gather_facts: yes
   vars:
     wifi_country: "US"
