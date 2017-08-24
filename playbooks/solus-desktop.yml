@@ -19,7 +19,7 @@
 
     - name: Download Google Chrome spec
       become: yes
-      command: eopkg bi --ignore-safety eopkg bi --ignore-safety https://raw.githubusercontent.com/solus-project/3rd-party/master/network/web/browser/google-chrome-stable/pspec.xml
+      command: eopkg bi --ignore-safety https://raw.githubusercontent.com/solus-project/3rd-party/master/network/web/browser/google-chrome-stable/pspec.xml
     - name: Install Google Chrome
       become: yes
       command: eopkg it google-chrome-*.eopkg
