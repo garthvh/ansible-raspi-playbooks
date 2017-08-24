@@ -69,6 +69,15 @@
       become: yes
       command: eopkg install glabels
 
+      # Electronics and 3D Printing
+    - name: Install LibreCad
+      become: yes
+      command: eopkg install librecad
+    - name: Install Fritzing
+      become: yes
+      command: eopkg install fritzing
+      //Cura
+      //SLi3r Prusa Editions
 
 
   handlers:
