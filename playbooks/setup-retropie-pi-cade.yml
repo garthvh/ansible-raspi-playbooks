@@ -4,6 +4,9 @@
   gather_facts: yes
   vars:
 
+    smb_rom_share: //VHSTORE/ROMS
+    smb_rom_folder: pi-cade/Systems/
+    smb_es_folder: emulationstation
     boot_config_options:
       # Enable audio (loads snd_bcm2835)
       - regexp: "^#?dtparam"
@@ -86,6 +89,9 @@
     - name: Set up Retrogame UDEV rule
       become: yes
       command: echo "SUBSYSTEM==\"input\", ATTRS{name}==\"retrogame\", ENV{ID_INPUT_KEYBOARD}=\"1\"" > /etc/udev/rules.d/10-retrogame.rules
+
+    # Copy roms using smbclient
+    - include: ../tasks/copy-retropie-roms.yml
 
   handlers:
 
