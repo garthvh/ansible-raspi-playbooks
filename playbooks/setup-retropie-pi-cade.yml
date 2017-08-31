@@ -5,7 +5,7 @@
   vars:
 
     smb_rom_share: //VHSTORE/ROMS
-    smb_rom_folder: Systems
+    smb_rom_folder: pi-cade
     smb_es_folder: emulationstation
     boot_config_options:
       # Enable audio (loads snd_bcm2835)
@@ -42,6 +42,12 @@
     # Run apt-get update and apt-get upgrade 
     - include: ../tasks/update.yml
       tags: update
+
+    - name: Install dependancies from apt
+        become: yes
+        apt: name={{item}} state=installed
+        with_items:
+          - smbclient
 
     # Configure boot/config.txt values
     - name: Configure option values in /boot/config.txt file.
