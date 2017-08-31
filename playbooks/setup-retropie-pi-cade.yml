@@ -39,6 +39,12 @@
 
   tasks:
 
+    - name: "Update RetroPie-Setup script from git"
+      git:
+        repo: "https://github.com/RetroPie/RetroPie-Setup.git"
+        dest: "/home/pi/RetroPie-Setup"
+        update: yes
+        
     # Run apt-get update and apt-get upgrade 
     - include: ../tasks/update.yml
       tags: update
