@@ -5,7 +5,7 @@
   vars:
 
     smb_rom_share: //VHSTORE/ROMS
-    smb_rom_folder: pi-cade
+    smb_rom_folder: SystemsKids
     smb_es_folder: emulationstation
     boot_config_options:
       # Enable audio (loads snd_bcm2835)
