@@ -44,10 +44,10 @@
       tags: update
 
     - name: Install dependancies from apt
-        become: yes
-        apt: name={{item}} state=installed
-        with_items:
-          - smbclient
+      become: yes
+      apt: name={{item}} state=installed
+      with_items:
+        - smbclient
 
     # Configure boot/config.txt values
     - name: Configure option values in /boot/config.txt file.
