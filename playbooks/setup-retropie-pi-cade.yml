@@ -78,6 +78,18 @@
           - ./retropie_packages.sh runcommand depends
           - ./retropie_packages.sh runcommand install
 
+    # Install Optional RetroPie Packages
+    - name: Install Optional Packages
+      become: yes
+      shell: >
+          ./retropie_packages.sh {{item}} depends;
+          ./retropie_packages.sh {{item}} install_bin;
+          ./retropie_packages.sh {{item}} configure
+      args:
+          chdir: "/home/pi/RetroPie-Setup"
+      with_items:
+          - kodi
+
     # Configure boot/config.txt values
     - name: Configure option values in /boot/config.txt file.
       become: yes
