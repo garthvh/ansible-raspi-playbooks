@@ -72,6 +72,7 @@
     # Install runncommand Script that lanuches games
     # https://github.com/RetroPie/RetroPie-Setup/wiki/Runcommand#runcommand
     - name: Install runcommand
+      become: yes
       command: "{{item}} chdir=/home/pi/RetroPie-Setup"
       with_items:
           - ./retropie_packages.sh runcommand depends
