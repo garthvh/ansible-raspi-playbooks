@@ -40,6 +40,7 @@
   tasks:
 
     - name: upgrade packages
+      become: yes
       apt: upgrade=dist update_cache=yes
 
     - name: Install dependancies from apt
@@ -57,6 +58,7 @@
         
     - name: Install and configure EmulationStation
       command: "{{item}} chdir=/home/pi/RetroPie-Setup"
+      become: yes
       with_items:
           - ./retropie_packages.sh emulationstation depends
           - ./retropie_packages.sh emulationstation install_bin
