@@ -50,13 +50,15 @@
         - git
         - smbclient
 
+    # Download the latest version of the setup script using git
     - name: Git clone RetroPie-Setup script
       git:
         repo: "https://github.com/RetroPie/RetroPie-Setup.git"
         dest: "/home/pi/RetroPie-Setup"
         update: yes
         
-    - name: Install and configure EmulationStation
+    # Install EmulationStation Frontend
+    - name: Install EmulationStation
       command: "{{item}} chdir=/home/pi/RetroPie-Setup"
       become: yes
       with_items:
@@ -67,6 +69,13 @@
           - ./retropie_packages.sh autostart enable
       tags: debug
    
+    # Install runncommand Script that lanuches games
+    # https://github.com/RetroPie/RetroPie-Setup/wiki/Runcommand#runcommand
+    - name: Install runcommand
+      command: "{{item}} chdir=/home/pi/RetroPie-Setup"
+      with_items:
+          - ./retropie_packages.sh runcommand depends
+          - ./retropie_packages.sh runcommand install
 
     # Configure boot/config.txt values
     - name: Configure option values in /boot/config.txt file.
