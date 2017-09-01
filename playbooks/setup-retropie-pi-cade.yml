@@ -89,6 +89,7 @@
           chdir: "/home/pi/RetroPie-Setup"
       with_items:
           - kodi
+          - minecraft
 
     # Configure boot/config.txt values
     - name: Configure option values in /boot/config.txt file.
