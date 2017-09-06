@@ -1,4 +1,5 @@
-
+# Ansible Playbook for my current home desktop computer running SolusOS
+# 
 # ansible-playbook -i ~/ansible/hosts /playbooks/solus-desktop.yml
 ---
 - hosts: solus
@@ -31,28 +32,32 @@
       become: yes
       command: eopkg it skype*.eopkg
       ignore_errors: yes
-
-    # Git 
+  
+    # Development
     - name: Install Git
       become: yes
       command: eopkg install git
+
     - name: Enable colors in git output
       become: yes
       command: git config --global color.ui auto
 
-    # Development
     - name: Install VS Code
       become: yes
       command: eopkg install vscode
+
     - name: Install Terminator
       become: yes
       command: eopkg install terminator
+
     - name: Install Angry IP Scanner
       become: yes
       command: eopkg install ipscan
+
     - name: Install system.devel
       become: yes
       command: eopkg install -c system.devel
+
     - name: Upgrade all the things
       become: yes
       command: eopkg upgrade
@@ -61,9 +66,11 @@
     - name: Install Cheese Photo Booth
       become: yes
       command: eopkg install cheese
+
     - name: Install The Gimp
       become: yes
       command: eopkg install gimp
+
     - name: Install gLabels
       become: yes
       command: eopkg install glabels
@@ -72,22 +79,43 @@
     - name: Install LibreCad
       become: yes
       command: eopkg install librecad
+
     - name: Install Fritzing
       become: yes
       command: eopkg install fritzing
 
-      # Utility
+    # Utility
     - name: Install Deja Dup
       become: yes
       command: eopkg install deja-dup
+
     - name: Install htop
       become: yes
       command: eopkg install htop
+      
     - name: Install Synergy
       become: yes
       command: eopkg install synergy
 
+    # Arduino IDE
+    # Download the arduino ide file
+    - name: download the Arduino IDE file
+      become: yes
+      get_url:
+        url: https://github.com/arduino/Arduino/releases/download/1.8.4/Arduino-1.8.4.tar.xz
+        dest: /home/downloads
+        mode: 0440
+    # Extract
+    - unarchive:
+        src: /home/downloads/Arduino-1.8.4.tar.xz
+        dest: /home/downloads/Arduino-1.8.4
+    # Install
+    - name: Run Arduino IDE install file
+      become: yes
+      command: /home/downloads/Arduino-1.8.4/install.sh
+
       # Wish List
+      # Arduino IDE
       # Cura
       # SLi3r Prusa Editions
       # Simplify 3D
