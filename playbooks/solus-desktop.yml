@@ -103,17 +103,10 @@
       command: eopkg install synergy
 
     # Arduino IDE
-    # Download the arduino ide file
-    - name: download the Arduino IDE file
-      become: yes
-      get_url:
-        url: https://github.com/arduino/Arduino/releases/download/1.8.4/Arduino-1.8.4.tar.xz
-        dest: /home/{{ username }}/Downloads
-        mode: 0440
-    # Extract
+    # Download and Extract
     - unarchive:
         become: yes
-        src: /home/{{ username }}/Downloads/Arduino-1.8.4.tar.xz
+        src: https://github.com/arduino/Arduino/releases/download/1.8.4/Arduino-1.8.4.tar.xz
         dest: /home/{{ username }}/Downloads/Arduino-1.8.4
     # Install
     - name: Run Arduino IDE install file
