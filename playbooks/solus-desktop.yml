@@ -11,32 +11,6 @@
     private: no
 
   tasks:
-
-    # Third Party Software
-    - name: Download Microsoft fonts spec
-      become: yes
-      command: eopkg bi --ignore-safety https://raw.githubusercontent.com/solus-project/3rd-party/master/desktop/font/mscorefonts/pspec.xml
-    - name: Install Microsoft fonts
-      become: yes
-      command: eopkg it mscorefonts*.eopkg
-      ignore_errors: yes
-
-    - name: Download Google Chrome spec
-      become: yes
-      command: eopkg bi --ignore-safety https://raw.githubusercontent.com/solus-project/3rd-party/master/network/web/browser/google-chrome-stable/pspec.xml
-    - name: Install Google Chrome
-      become: yes
-      command: eopkg it google-chrome-*.eopkg
-      ignore_errors: yes
-
-    - name: Download Skype for Linux spec
-      become: yes
-      command: eopkg bi --ignore-safety https://raw.githubusercontent.com/solus-project/3rd-party/master/network/im/skype/pspec.xml
-
-    - name: Install Skype for Linux
-      become: yes
-      command: eopkg it skype*.eopkg
-      ignore_errors: yes
   
     # Development
     - name: Install Git
@@ -67,7 +41,7 @@
       become: yes
       command: eopkg upgrade
 
-      # Media
+    # Media
     - name: Install Cheese Photo Booth
       become: yes
       command: eopkg install cheese
@@ -80,7 +54,7 @@
       become: yes
       command: eopkg install glabels
 
-      # Electronics and 3D Printing
+    # Electronics and 3D Printing
     - name: Install LibreCad
       become: yes
       command: eopkg install librecad
@@ -102,12 +76,40 @@
       become: yes
       command: eopkg install synergy
 
+    # Third Party Software
+    - name: Download Microsoft fonts spec
+      become: yes
+      command: eopkg bi --ignore-safety https://raw.githubusercontent.com/solus-project/3rd-party/master/desktop/font/mscorefonts/pspec.xml
+    - name: Install Microsoft fonts
+      become: yes
+      command: eopkg it mscorefonts*.eopkg
+      ignore_errors: yes
+
+    - name: Download Google Chrome spec
+      become: yes
+      command: eopkg bi --ignore-safety https://raw.githubusercontent.com/solus-project/3rd-party/master/network/web/browser/google-chrome-stable/pspec.xml
+    - name: Install Google Chrome
+      become: yes
+      command: eopkg it google-chrome-*.eopkg
+      ignore_errors: yes
+
+    - name: Download Skype for Linux spec
+      become: yes
+      command: eopkg bi --ignore-safety https://raw.githubusercontent.com/solus-project/3rd-party/master/network/im/skype/pspec.xml
+
+    - name: Install Skype for Linux
+      become: yes
+      command: eopkg it skype*.eopkg
+      ignore_errors: yes
+
+    #### Manual Installations ####
     # Arduino IDE
     # Download and Extract
     - unarchive:
         become: yes
         src: https://github.com/arduino/Arduino/releases/download/1.8.4/Arduino-1.8.4.tar.xz
         dest: /home/{{ username }}/Downloads/Arduino-1.8.4
+        remote_src: True
     # Install
     - name: Run Arduino IDE install file
       become: yes
