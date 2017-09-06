@@ -110,7 +110,7 @@
     # Download and Extract
     - unarchive:
         src: https://github.com/arduino/Arduino/releases/download/1.8.4/Arduino-1.8.4.tar.xz
-        dest: /home/{{ username }}/Downloads/Arduino-1.8.4
+        dest: /home/{{ username }}/Downloads
         remote_src: True
     # Install
     - name: Run Arduino IDE install file
