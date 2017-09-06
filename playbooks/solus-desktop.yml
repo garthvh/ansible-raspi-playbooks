@@ -115,7 +115,7 @@
     # Install
     - name: Run Arduino IDE install file
       become: yes
-      command: /home/{{ username }}/Downloads/Arduino-1.8.4/install.sh
+      command: /home/{{ username }}/Downloads/Arduino-1.8.4/build/linux/dist/install.sh
 
       # Wish List
       # Arduino IDE
