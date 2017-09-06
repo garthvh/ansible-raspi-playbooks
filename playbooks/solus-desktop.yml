@@ -3,8 +3,6 @@
 ---
 - hosts: solus
   gather_facts: yes
-  vars:
-    wifi_country: "US"
 
   tasks:
 
@@ -28,9 +26,10 @@
     - name: Download Skype for Linux spec
       become: yes
       command: eopkg bi --ignore-safety https://raw.githubusercontent.com/solus-project/3rd-party/master/network/im/skype/pspec.xml
+
     - name: Install Skype for Linux
       become: yes
-      command: sudo eopkg it skype*.eopkg
+      command: eopkg it skype*.eopkg
       ignore_errors: yes
 
     # Git 
@@ -76,8 +75,22 @@
     - name: Install Fritzing
       become: yes
       command: eopkg install fritzing
-      #Cura
-      #SLi3r Prusa Editions
+
+      # Utility
+    - name: Install Deja Dup
+      become: yes
+      command: eopkg install deja-dup
+    - name: Install htop
+      become: yes
+      command: eopkg install htop
+    - name: Install Synergy
+      become: yes
+      command: eopkg install synergy
+
+      # Wish List
+      # Cura
+      # SLi3r Prusa Editions
+      # Simplify 3D
 
 
   handlers:
