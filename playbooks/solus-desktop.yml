@@ -104,6 +104,9 @@
 
     #### Manual Installations ####
     # Arduino IDE
+    # Create a folder
+    - name: Creates directory
+      file: path=/home/{{ username }}/Downloads/Arduino-1.8.4 state=directory
     # Download and Extract
     - unarchive:
         become: yes
