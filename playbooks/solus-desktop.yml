@@ -109,7 +109,6 @@
       file: path=/home/{{ username }}/Downloads/Arduino-1.8.4 state=directory
     # Download and Extract
     - unarchive:
-        become: yes
         src: https://github.com/arduino/Arduino/releases/download/1.8.4/Arduino-1.8.4.tar.xz
         dest: /home/{{ username }}/Downloads/Arduino-1.8.4
         remote_src: True
