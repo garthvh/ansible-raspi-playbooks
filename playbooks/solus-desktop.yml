@@ -92,7 +92,7 @@
     - name: Install htop
       become: yes
       command: eopkg install htop
-      
+
     - name: Install Synergy
       become: yes
       command: eopkg install synergy
@@ -112,7 +112,7 @@
     # Install
     - name: Run Arduino IDE install file
       become: yes
-      command: /home/downloads/Arduino-1.8.4/install.sh
+      command: /home/Downloads/Arduino-1.8.4/install.sh
 
       # Wish List
       # Arduino IDE
