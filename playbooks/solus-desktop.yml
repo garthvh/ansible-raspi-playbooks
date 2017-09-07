@@ -117,6 +117,27 @@
       become: yes
       command: /home/{{ username }}/Downloads/Arduino-1.8.4/build/linux/dist/install.sh
 
+    # Download the latest version of the Dymo LabelMaker 450 Drivers using git
+    - name: Git clone Dymo LabelMaker 450 Drivers
+      git:
+        repo: "https://aur.archlinux.org/dymo-cups-drivers.git"
+        dest: "/home/{{ username }}/Downloads/dymo-cups-drivers"
+        update: yes
+    # ./configure
+    - name: ./configure
+      become: yes
+      command: ./configure
+      chdir: "/home/{{ username }}/Downloads/dymo-cups-drivers"
+    # make
+    - name: make
+      become: yes
+      command: make
+      chdir: "/home/{{ username }}/Downloads/dymo-cups-drivers"
+    # make install
+    - name: make install
+      become: yes
+      command: make install
+      chdir: "/home/{{ username }}/Downloads/dymo-cups-drivers"
       # Wish List
       # Arduino IDE
       # Cura
