@@ -124,20 +124,23 @@
         dest: "/home/{{ username }}/Downloads/dymo-cups-drivers"
         update: yes
     # ./configure
-    - name: ./configure
+    - name: configure
       become: yes
       command: ./configure
-      chdir: "/home/{{ username }}/Downloads/dymo-cups-drivers"
+      args:
+        chdir: "/home/{{ username }}/Downloads/dymo-cups-drivers"
     # make
     - name: make
       become: yes
       command: make
-      chdir: "/home/{{ username }}/Downloads/dymo-cups-drivers"
+      args:
+        chdir: "/home/{{ username }}/Downloads/dymo-cups-drivers"
     # make install
     - name: make install
       become: yes
       command: make install
-      chdir: "/home/{{ username }}/Downloads/dymo-cups-drivers"
+      args:
+        chdir: "/home/{{ username }}/Downloads/dymo-cups-drivers"
       # Wish List
       # Arduino IDE
       # Cura
