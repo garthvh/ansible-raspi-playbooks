@@ -91,6 +91,10 @@
           - kodi
           - minecraft
 
+    - name: dpkg-reconfigure
+      become: yes
+      command: dpkg-reconfigure x11-common
+          
     # Configure boot/config.txt values
     - name: Configure option values in /boot/config.txt file.
       become: yes
@@ -140,6 +144,16 @@
 
     # Copy roms using smbclient
     - include: ../tasks/copy-retropie-roms.yml
+
+    # Configure Kodi
+    # Requires a kodi folder in your roms folder,
+    # a kodi.sh startup file in that folder that contains kodi-standalone,
+    # and a record in the es_systems.config file.
+    # Put the appropriate joystick.xml file in place
+    - name: Put the appropriate joystick.xml file in place
+      template: src=../templates/kodi/joystick.pi-cade.xml dest=home/pi/.kodi/userdata/keymaps/joystick.xml
+      notify:
+        reboot
 
   handlers:
 
