@@ -68,15 +68,6 @@
           - ./retropie_packages.sh esthemes install_theme
           - ./retropie_packages.sh autostart enable
       tags: debug
-   
-    # Install runncommand Script that lanuches games
-    # https://github.com/RetroPie/RetroPie-Setup/wiki/Runcommand#runcommand
-    - name: Install runcommand
-      become: yes
-      command: "{{item}} chdir=/home/pi/RetroPie-Setup"
-      with_items:
-          - ./retropie_packages.sh runcommand depends
-          - ./retropie_packages.sh runcommand install
 
     # Install Optional RetroPie Packages
     - name: Install Optional Packages
