@@ -80,11 +80,6 @@
           chdir: "/home/pi/RetroPie-Setup"
       with_items:
           - kodi
-          - minecraft
-
-    - name: dpkg-reconfigure
-      become: yes
-      command: dpkg-reconfigure x11-common
           
     # Configure boot/config.txt values
     - name: Configure option values in /boot/config.txt file.
@@ -145,6 +140,13 @@
       template: src=../templates/kodi/joystick.pi-cade.xml dest=home/pi/.kodi/userdata/keymaps/joystick.xml
       notify:
         reboot
+
+    # Run chmod on kodi.sh file
+    - name: Run chmod on pygame_test.py file
+      become: yes
+      command: chmod u+x /home/pi/RetroPie/roms/kodi/kodi.sh
+      notify:
+        - reboot
 
   handlers:
 
