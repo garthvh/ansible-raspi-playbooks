@@ -1,6 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <keymap>
   <global>
+    <keyboard>
+      <left>Left</left>
+      <right>Right</right>
+      <up>Up</up>
+      <down>Down</down>
+      <left mod="ctrl">Enter</left>
+      <left mod="alt">Back</left>
+    </keyboard>
     <joystick name="Pi-Cade Arcade Controls ">
       <button id="3">Select</button>
       <button id="2">Back</button>
