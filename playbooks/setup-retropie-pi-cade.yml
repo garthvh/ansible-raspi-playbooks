@@ -142,7 +142,7 @@
         reboot
 
     # Run chmod on kodi.sh file
-    - name: Run chmod on pygame_test.py file
+    - name: Run chmod on kodi.sh file
       become: yes
       command: chmod u+x /home/pi/RetroPie/roms/kodi/kodi.sh
       notify:
