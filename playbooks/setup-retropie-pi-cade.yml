@@ -137,7 +137,7 @@
     # and a record in the es_systems.config file.
     # Put the appropriate joystick.xml file in place
     - name: Put the appropriate joystick.xml file in place
-      template: src=../templates/kodi/joystick.pi-cade.xml dest=home/pi/.kodi/userdata/keymaps/joystick.xml
+      template: src=../templates/kodi/joystick.pi-cade.xml dest=/home/pi/.kodi/userdata/keymaps/joystick.xml
       notify:
         reboot
 
