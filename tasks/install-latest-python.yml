@@ -1,0 +1,40 @@
+# Install python
+# Depends on:
+#   tasks:
+#       tasks/base_packages.yml
+#
+
+# Download and unzip latest python file
+- name: Download and unzip latest python file using
+  unarchive:
+    src: https://www.python.org/ftp/python/{{ python_version }}/Python-{{ python_version }}.tar.xz
+    dest: /home/pi
+    remote_src: yes
+
+- name: Install latest python version using
+  become: yes
+  command: chdir=/home/pi/Python-{{ python_version }} {{ item }}
+  with_items:
+    - yes 'y' | ./configure
+    - yes 'y' | make
+    - yes 'y' | make altinstall
+
+- name: Remove python source code
+  become: yes
+  file:
+    state: absent
+    path: /home/pi/Python-{{ python_version }}
+
+- name: Remove python source code zip file
+  become: yes
+  file:
+    state: absent
+    path: /home/pi/Python-{{ python_version }}.tar
+
+# # Download latest python
+# - name: Download astro pi python test file
+#   become: yes
+#   get_url:
+#     url: https://www.python.org/ftp/python/{{ python_version }}/Python-{{ python_version }}.tar.xz
+#     dest: /home/pi/Python-{{ python_version }}.tar.xz
+#     mode: 0440
