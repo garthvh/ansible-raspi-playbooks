@@ -1,0 +1,102 @@
+# Install base packages and libraries
+# Depends on:
+#   tasks:
+#       tasks/update.yml
+#   
+
+# Install packages
+- name: Install the package "tmux"
+  become: yes
+  apt:
+    name: tmux
+    state: present
+
+- name: Install the package "build-essential"
+  become: yes
+  apt:
+    name: build-essential
+    state: present
+
+- name: Install the package "tk-dev"
+  become: yes
+  apt:
+    name: tk-dev
+    state: present
+
+- name: Install the package "libncurses5-dev"
+  become: yes
+  apt:
+    name: libncurses5-dev
+    state: present
+
+- name: Install the package "libncursesw5-dev"
+  become: yes
+  apt:
+    name: libncursesw5-dev
+    state: present
+
+- name: Install the package "libreadline6-dev"
+  become: yes
+  apt:
+    name: libreadline6-dev
+    state: present
+
+- name: Install the package "libdb5.3-dev"
+  become: yes
+  apt:
+    name: libdb5.3-dev
+    state: present
+
+- name: Install the package "libgdbm-dev"
+  become: yes
+  apt:
+    name: libgdbm-dev
+    state: present
+
+- name: Install the package "libsqlite3-dev"
+  become: yes
+  apt:
+    name: libsqlite3-dev
+    state: present
+
+- name: Install the package "libssl-dev"
+  become: yes
+  apt:
+    name: libssl-dev
+    state: present
+
+- name: Install the package "libbz2-dev"
+  become: yes
+  apt:
+    name: libbz2-dev
+    state: present
+
+- name: Install the package "libexpat1-dev"
+  become: yes
+  apt:
+    name: libexpat1-dev
+    state: present
+
+- name: Install the package "liblzma-dev"
+  become: yes
+  apt:
+    name: liblzma-dev
+    state: present
+
+- name: Install the package "zlib1g-dev"
+  become: yes
+  apt:
+    name: zlib1g-dev
+    state: present
+
+- name: Install the package "python-pip"
+  become: yes
+  apt:
+    name: python-pip
+    state: present
+
+- name: Install the package "python3-pip"
+  become: yes
+  apt:
+    name: python3-pip
+    state: present

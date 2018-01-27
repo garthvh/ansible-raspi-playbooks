@@ -2,7 +2,7 @@
 # Depends on:
 #   handlers:
 #       handlers/reboot.yml
-#   
+#
 
 # Expand File the System
 - name: Expand filesystem to fill disk
