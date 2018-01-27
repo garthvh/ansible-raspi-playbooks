@@ -4,6 +4,7 @@
 #       tasks/install-python-modules.yml
 #
 
+# Followed https://github.com/lciolecki/ansible.virtualenvwrapper
 - name: Set workon home path
   become: yes
   action:
