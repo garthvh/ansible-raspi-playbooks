@@ -1,0 +1,76 @@
+# Configure virtualenvwrapper
+# Depends on:
+#   tasks:
+#       tasks/install-python-modules.yml
+#
+
+# Followed https://github.com/lciolecki/ansible.virtualenvwrapper
+- name: Set workon home path
+  become: yes
+  action:
+    module: lineinfile
+    dest: "{{ virtualenvwrapper_shell_file }}"
+    regexp: "export WORKON_HOME"
+    line: "export WORKON_HOME={{ virtualenvwrapper_home }}"
+    state: present
+    backup: yes
+    create: yes
+  tags:
+    - virtualenvwrapper
+    - virtualenvwrapper.configuration
+
+- name: Load virtualenvwrapper.sh
+  become: yes
+  action:
+    module: lineinfile
+    dest: "{{ virtualenvwrapper_shell_file }}"
+    regexp: "source {{ virtualenvwrapper_source }}"
+    line: "source {{ virtualenvwrapper_source }}"
+    state: present
+    backup: yes
+    create: yes
+  tags:
+    - virtualenvwrapper
+    - virtualenvwrapper.configuration
+
+# - name: Set project path
+#   become: yes
+#   action:
+#     module: lineinfile
+#     dest: "{{ virtualenvwrapper_shell_file }}"
+#     regexp: "export PROJECT_HOME"
+#     line: "export PROJECT_HOME={{ virtualenvwrapper_project }}"
+#     state: present
+#     backup: yes
+#     create: yes
+#   tags:
+#     - virtualenvwrapper
+#     - virtualenvwrapper.configuration
+
+# - name: Set virtualenvwrapper python path
+#   become: yes
+#   action:
+#     module: lineinfile
+#     dest: "{{ virtualenvwrapper_shell_file }}"
+#     regexp: "export VIRTUALENVWRAPPER_PYTHON"
+#     line: "export VIRTUALENVWRAPPER_PYTHON={{ virtualenvwrapper_python }}"
+#     state: present
+#     backup: yes
+#     create: yes
+#   tags:
+#     - virtualenvwrapper
+#     - virtualenvwrapper.configuration
+
+# - name: Set virtualenvwrapper path
+#   become: yes
+#   action:
+#     module: lineinfile
+#     dest: "{{ virtualenvwrapper_shell_file }}"
+#     regexp: "export VIRTUALENVWRAPPER_VIRTUALENV"
+#     line: "export VIRTUALENVWRAPPER_VIRTUALENV={{ virtualenvwrapper_virtualenv }}"
+#     state: present
+#     backup: yes
+#     create: yes
+#   tags:
+#     - virtualenvwrapper
+#     - virtualenvwrapper.configuration
