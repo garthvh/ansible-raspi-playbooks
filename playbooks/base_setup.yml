@@ -70,21 +70,25 @@
       tags: setup
 
     # Download and install latest python version
-    - include: ..tasks/install-latest-python.yml
+    - include: ../tasks/install-latest-python.yml
       tags: setup
 
     # Install python libraries
-    - include: ..tasks/install-python-modules.yml
+    - include: ../tasks/install-python-modules.yml
       tags: setup
 
     # Configure virtualenvwrapper
-    - include: ..tasks/virtualenvwrapper-configuration.yml
+    - include: ../tasks/virtualenvwrapper-configuration.yml
       tags:
         - virtualenvwrapper
         - virtualenvwrapper.configuration
 
     # Set the hostname
     - include: ../tasks/hostname.yml
+      tags: setup
+
+    # Copy shell files
+    - include: ../tasks/shell_files.yml
       tags: setup
 
   handlers:
