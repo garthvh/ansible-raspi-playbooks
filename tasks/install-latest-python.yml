@@ -46,9 +46,9 @@
   become: yes
   command: chdir=/home/pi/Python-{{ python_version }} {{ item }}
   with_items:
-    - yes 'y' | ./configure
-    - yes 'y' | make
-    - yes 'y' | make altinstall
+    - sudo yes 'y' | sudo ./configure
+    - sudo yes 'y' | sudo make
+    - sudo yes 'y' | sudo make altinstall
 
 - name: Remove python source code
   become: yes
