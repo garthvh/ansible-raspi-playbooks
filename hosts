@@ -1,7 +1,7 @@
 # Hostnames for devices 
 
 [defaultdevices]
-# UPDATE ME
+jarvis
 [defaultdevices:vars]
 ansible_user=pi
 ansible_ssh_pass=raspberry
