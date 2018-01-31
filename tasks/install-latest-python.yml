@@ -4,6 +4,37 @@
 #       tasks/base_packages.yml
 #
 
+
+# - name: Download latest python version
+#   become: yes
+#   command: cd /home/pi/ && wget https://www.python.org/ftp/python/{{ python_version }}/Python-{{ python_version }}.tar.xz && tar xf Python-{{ python_version }}.tar.xz
+
+# # Download latest python
+# - name: Download latest python
+#   become: yes
+#   get_url:
+#     url: https://www.python.org/ftp/python/{{ python_version }}/Python-{{ python_version }}.tar.xz
+#     dest: /home/pi/Python-{{ python_version }}.tar.xz
+#     # mode: 0440
+
+# - name: Extract python archive
+#   unarchive:
+#     src: /home/pi/Python-{{ python_version }}.tar.xz
+#     dest: /home/pi/Python-{{ python_version }}
+#     copy: no
+
+# - name: Download latest python version
+#   become: yes
+#   command: chdir=/home/pi/ {{ item }}
+#   with_items:
+#     - wget https://www.python.org/ftp/python/{{ python_version }}/Python-{{ python_version }}.tar.xz
+
+# - name: Unzip latest python version
+#   become: yes
+#   command: chdir=/home/pi/ {{ item }}
+#   with_items:
+#     - tar xf Python-{{ python_version }}.tar.xz
+
 # Download and unzip latest python file
 - name: Download and unzip latest python file using
   unarchive:
@@ -31,10 +62,3 @@
     state: absent
     path: /home/pi/Python-{{ python_version }}.tar
 
-# # Download latest python
-# - name: Download astro pi python test file
-#   become: yes
-#   get_url:
-#     url: https://www.python.org/ftp/python/{{ python_version }}/Python-{{ python_version }}.tar.xz
-#     dest: /home/pi/Python-{{ python_version }}.tar.xz
-#     mode: 0440
