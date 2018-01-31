@@ -1,0 +1,7 @@
+# Hostnames for devices 
+
+[defaultdevices]
+# UPDATE ME
+[defaultdevices:vars]
+ansible_user=pi
+ansible_ssh_pass=raspberry
