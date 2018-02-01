@@ -10,3 +10,9 @@
     module: pip
     name: virtualenvwrapper
     state: present
+
+- name: Install virtualenvwrapper for pi user
+  action:
+    module: pip
+    name: virtualenvwrapper
+    state: present
