@@ -4,61 +4,45 @@
 #       tasks/base_packages.yml
 #
 
-
-# - name: Download latest python version
-#   become: yes
-#   command: cd /home/pi/ && wget https://www.python.org/ftp/python/{{ python_version }}/Python-{{ python_version }}.tar.xz && tar xf Python-{{ python_version }}.tar.xz
-
-# # Download latest python
-# - name: Download latest python
-#   become: yes
-#   get_url:
-#     url: https://www.python.org/ftp/python/{{ python_version }}/Python-{{ python_version }}.tar.xz
-#     dest: /home/pi/Python-{{ python_version }}.tar.xz
-#     # mode: 0440
-
-# - name: Extract python archive
-#   unarchive:
-#     src: /home/pi/Python-{{ python_version }}.tar.xz
-#     dest: /home/pi/Python-{{ python_version }}
-#     copy: no
-
-# - name: Download latest python version
-#   become: yes
-#   command: chdir=/home/pi/ {{ item }}
-#   with_items:
-#     - wget https://www.python.org/ftp/python/{{ python_version }}/Python-{{ python_version }}.tar.xz
-
-# - name: Unzip latest python version
-#   become: yes
-#   command: chdir=/home/pi/ {{ item }}
-#   with_items:
-#     - tar xf Python-{{ python_version }}.tar.xz
-
 # Download and unzip latest python file
-- name: Download and unzip latest python file using
+- name: Download and unzip latest python file
   unarchive:
     src: https://www.python.org/ftp/python/{{ python_version }}/Python-{{ python_version }}.tar.xz
     dest: /home/pi
     remote_src: yes
 
-- name: Install latest python version using
+- name: Configure python
   become: yes
-  command: chdir=/home/pi/Python-{{ python_version }} {{ item }}
-  with_items:
-    - sudo yes 'y' | sudo ./configure
-    - sudo yes 'y' | sudo make
-    - sudo yes 'y' | sudo make altinstall
+  shell: yes 'y' | ./configure
+  args:
+    chdir: /home/pi/Python-{{ python_version }}
+  register: python_output
+
+- name: Show python installation output
+  debug: msg="{{ python_output.stdout_lines }}"
+
+- name: Run make for python
+  become: yes
+  shell: yes 'y' | make
+  args:
+    chdir: /home/pi/Python-{{ python_version }}
+  register: python_output
+
+- name: Show python installation output
+  debug: msg="{{ python_output.stdout_lines }}"
+
+- name: Run altinstall for python
+  become: yes
+  shell: yes 'y' | make altinstall
+  args:
+    chdir: /home/pi/Python-{{ python_version }}
+  register: python_output
+
+- name: Show python installation output
+  debug: msg="{{ python_output.stdout_lines }}"
 
 - name: Remove python source code
   become: yes
   file:
     state: absent
     path: /home/pi/Python-{{ python_version }}
-
-- name: Remove python source code zip file
-  become: yes
-  file:
-    state: absent
-    path: /home/pi/Python-{{ python_version }}.tar
-

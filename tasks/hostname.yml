@@ -8,3 +8,25 @@
 - name: Set the hostname
   become: yes
   command: hostnamectl set-hostname "{{ hostname }}"
+
+# Pre-emptively fix hanging ssh following https://expresshosting.net/ssh-hanging-authentication/
+- name: Add line in ssh_config to prevent hanging ssh
+  action:
+    module: lineinfile
+    dest: "/etc/ssh/ssh_config"
+    regexp: "IPQoS 0x00"
+    line: "IPQoS 0x00"
+    state: present
+    backup: yes
+    create: yes
+
+# Pre-emptively fix hanging ssh following https://expresshosting.net/ssh-hanging-authentication/
+- name: Add line in sshd_config to prevent hanging ssh
+  action:
+    module: lineinfile
+    dest: "/etc/ssh/sshd_config"
+    regexp: "IPQoS 0x00"
+    line: "IPQoS 0x00"
+    state: present
+    backup: yes
+    create: yes

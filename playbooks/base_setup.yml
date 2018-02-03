@@ -1,4 +1,4 @@
-# ansible-playbook -i ~/ansible/hosts /playbooks/new-default.yml
+# ansible-playbook playbooks/base_setup.yml -i hosts --ask-pass --become -c paramiko
 ---
 - hosts: defaultdevices
   gather_facts: yes
@@ -8,8 +8,8 @@
     keyboard: "pc104"
     keyboard_layout: "us"
     virtualenvwrapper_source: "/usr/local/bin/virtualenvwrapper.sh"
-    virtualenvwrapper_home: "{{ lookup('env', 'HOME') }}/.virtualenvs/"
-    virtualenvwrapper_shell_file: "{{ lookup('env', 'HOME') }}/.bashrc"
+    virtualenvwrapper_home: "/home/pi/.virtualenvs/"
+    virtualenvwrapper_shell_file: "/home/pi/.bashrc"
     timezone: America/New_York
     locale_options:
       # Disable Default (GB) Locale
@@ -34,7 +34,7 @@
     prompt: "please enter the SSH Key for your new device:"
     private: yes
   - name: python_version
-    prompt: "please enter the latest python version number in the form X.X.X:"
+    prompt: "please enter the python version number (above 2.7) that you would like to install in the form X.X.X:"
     private: no
 
   tasks:
@@ -89,6 +89,10 @@
 
     # Copy shell files
     - include: ../tasks/shell_files.yml
+      tags: setup
+
+    # Build directories
+    - include: ../tasks/build_dirs.yml
       tags: setup
 
   handlers:

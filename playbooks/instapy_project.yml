@@ -1,0 +1,65 @@
+# ansible-playbook playbooks/instapy_project.yml -i hosts --ask-pass --become -c paramiko
+# Assumes base_setup.yml was run before this
+---
+- hosts: defaultdevices
+  gather_facts: yes
+
+  vars_prompt:
+
+  - name: geckodriver_version
+    prompt: "please enter a geckodriver version in the form of X.X.X (latest found in https://github.com/mozilla/geckodriver/releases):"
+    private: no
+
+  tasks:
+
+    # Clon InstaPy https://github.com/timgrossmann/InstaPy
+    - git:
+        repo: https://github.com/timgrossmann/InstaPy.git
+        dest: /home/pi/code/InstaPy
+
+    # Create a virtual environment
+    - name: Install requirements
+      pip: 
+        requirements: /home/code/InstaPy/requirements.txt
+        virtualenv: /home/pi/.virtualenvs/instapy36
+        virtualenv_python: python3.6
+
+    # Install firefox ESR
+    - name: Install the package "firefox-esr"
+      become: yes
+      apt:
+        name: firefox-esr
+        state: present
+
+    # Install xvfb
+    - name: Install the package "xvfb"
+      become: yes
+      apt:
+        name: xvfb
+        state: present
+
+    # Download and unzip latest geckodriver
+    - name: Download and unzip latest geckodriver
+      unarchive:
+        src: https://github.com/mozilla/geckodriver/releases/download/v{{ geckodriver_version }}/geckodriver-v{{ geckodriver_version }}-arm7hf.tar.gz
+        dest: /usr/local/bin/
+        remote_src: yes
+
+    # Make geckodriver executable
+    - name: Changing perm of "/usr/local/bin/geckodriver", adding "+x"
+      become: yes
+      file: dest=/usr/local/bin/geckodriver mode=a+x
+
+    - name: Install pyvirtualdisplay
+      become: yes
+      action:
+        module: pip
+        name: pyvirtualdisplay
+        state: present
+
+    - name: Install future
+      become: yes
+      action:
+        module: pip
+        name: future
+        state: present

@@ -6,7 +6,6 @@
 
 # Followed https://github.com/lciolecki/ansible.virtualenvwrapper
 - name: Set workon home path
-  become: yes
   action:
     module: lineinfile
     dest: "{{ virtualenvwrapper_shell_file }}"
@@ -20,7 +19,6 @@
     - virtualenvwrapper.configuration
 
 - name: Load virtualenvwrapper.sh
-  become: yes
   action:
     module: lineinfile
     dest: "{{ virtualenvwrapper_shell_file }}"
