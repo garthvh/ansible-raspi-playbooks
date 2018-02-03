@@ -7,7 +7,6 @@
 # Followed https://github.com/lciolecki/ansible.virtualenvwrapper
 - name: Set workon home path
   action:
-    become: yes
     module: lineinfile
     dest: "{{ virtualenvwrapper_shell_file }}"
     regexp: "export WORKON_HOME"
@@ -21,7 +20,6 @@
 
 - name: Load virtualenvwrapper.sh
   action:
-    become: yes
     module: lineinfile
     dest: "{{ virtualenvwrapper_shell_file }}"
     regexp: "source {{ virtualenvwrapper_source }}"

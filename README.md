@@ -22,7 +22,7 @@ I have an ansible host file ~/ansible/hosts set up with all of my device hostnam
     # Hostnames for devices 
 
     [defaultdevices]
-    jarvis
+    192.168.1.xxx
     [defaultdevices:vars]
     ansible_user=pi
     ansible_ssh_pass=raspberry

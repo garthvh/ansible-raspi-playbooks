@@ -1,4 +1,4 @@
-# ansible-playbook -i ~/ansible/hosts /playbooks/new-default.yml
+# ansible-playbook playbooks/base_setup.yml -i hosts --ask-pass --become -c paramiko
 ---
 - hosts: defaultdevices
   gather_facts: yes
@@ -89,6 +89,10 @@
 
     # Copy shell files
     - include: ../tasks/shell_files.yml
+      tags: setup
+
+    # Build directories
+    - include: ../tasks/build_dirs.yml
       tags: setup
 
   handlers:

@@ -1,0 +1,11 @@
+# Build directories
+# Depends on:
+#   tasks:
+#       tasks/shell_files.yml
+#   
+
+# create a code directory
+- file:
+    path: /home/pi/code
+    state: directory
+    mode: 0755

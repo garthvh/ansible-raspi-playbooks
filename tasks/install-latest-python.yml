@@ -5,7 +5,7 @@
 #
 
 # Download and unzip latest python file
-- name: Download and unzip latest python file using
+- name: Download and unzip latest python file
   unarchive:
     src: https://www.python.org/ftp/python/{{ python_version }}/Python-{{ python_version }}.tar.xz
     dest: /home/pi
@@ -46,11 +46,3 @@
   file:
     state: absent
     path: /home/pi/Python-{{ python_version }}
-
-- name: Remove python source code zip file
-  become: yes
-  file:
-    state: absent
-    path: /home/pi/Python-{{ python_version }}.tar
-  ignore_errors: True
-
