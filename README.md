@@ -30,9 +30,9 @@ I have an ansible host file ~/ansible/hosts set up with all of my device hostnam
 ## Raspbian and RetroPie default Installations
 The first step of my setup workflow is to run the base_setup.yml playbook from the playbooks folder.  
 
-This playbook asumes you have the latest version of [raspbian](https://www.raspberrypi.org/downloads/raspbian/) installed on a SD card and connected to the network via ethernet.
+This playbook asumes you have the latest version of [raspbian](https://www.raspberrypi.org/downloads/raspbian/) installed on a SD card and connected to the network via ethernet. Be sure that you've put an empty file with the name `ssh` in the root (`/`) boot directory so ssh will be toggled on automatically. Otherwise you'll have to connect peripherals to set everything up. If you do not have a formatted SD card, you can follow the instructions in the section below entiteld "Mounting an OS"
 
-The base_setup.yml playbook will do the following for hosts named "jarvis":
+The base_setup.yml playbook will do the following for hosts listed in the [defaultdevices] section:
 
 + Expand the filesystem
 + Set Internationalization Options
@@ -50,7 +50,7 @@ The base_setup.yml playbook will do the following for hosts named "jarvis":
 You will need to add the default "raspberry" password and pi user info for the default devices only in your ansible hosts file since this script will put the SSH key in place.
 
     [defaultdevices] # Default hostnames for raspbian and retropie devices 
-    jarvis
+    192.168.1.xxx
     [defaultdevices:vars]
     ansible_user=pi
     ansible_ssh_pass=raspberry
@@ -65,5 +65,11 @@ The playbook will prompt you for the following items during setup:
 + SSH Key
 + Preferred python version (other than 2.7)
 
-## Creating additional playbooks
-I am happy to accept pull requests for additional playbooks or tasks for Pi projects
+## Mounting an OS
+Download an RPi OS image [here](https://www.raspberrypi.org/downloads/).
+
+Follow the OS installation instructions [here](https://www.raspberrypi.org/documentation/installation/installing-images/README.md). There are pecific instructions for MacOS process [here](https://www.raspberrypi.org/documentation/installation/installing-images/mac.md).
+
+Download [Etcher](https://etcher.io/) for a GUI install. Command line instructions [here](https://www.raspberrypi.org/documentation/installation/installing-images/mac.md) if not using GUI (advanced).
+
+Once mounted, add an empty file named `ssh` in the root directory (see the 3rd item in [this guide](https://www.raspberrypi.org/documentation/remote-access/ssh/) for more info on why this is needed.
