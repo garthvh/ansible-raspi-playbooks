@@ -3,33 +3,22 @@
 ---
 - hosts: defaultdevices
   gather_facts: yes
-
-  vars_prompt:
-
-  - name: geckodriver_version
-    prompt: "please enter a geckodriver version in the form of X.X.X (latest found in https://github.com/mozilla/geckodriver/releases):"
-    private: no
+  vars:
+    instapy_path: "/home/pi/code/InstaPy"
 
   tasks:
 
     # Clon InstaPy https://github.com/timgrossmann/InstaPy
     - git:
         repo: https://github.com/timgrossmann/InstaPy.git
-        dest: /home/pi/code/InstaPy
+        dest: {{ instapy_path }}
 
     # Create a virtual environment
     - name: Install requirements
       pip: 
-        requirements: /home/code/InstaPy/requirements.txt
+        requirements: {{ instapy_path }}/requirements.txt
         virtualenv: /home/pi/.virtualenvs/instapy36
         virtualenv_python: python3.6
-
-    # Install firefox ESR
-    - name: Install the package "firefox-esr"
-      become: yes
-      apt:
-        name: firefox-esr
-        state: present
 
     # Install xvfb
     - name: Install the package "xvfb"
@@ -37,18 +26,6 @@
       apt:
         name: xvfb
         state: present
-
-    # Download and unzip latest geckodriver
-    - name: Download and unzip latest geckodriver
-      unarchive:
-        src: https://github.com/mozilla/geckodriver/releases/download/v{{ geckodriver_version }}/geckodriver-v{{ geckodriver_version }}-arm7hf.tar.gz
-        dest: /usr/local/bin/
-        remote_src: yes
-
-    # Make geckodriver executable
-    - name: Changing perm of "/usr/local/bin/geckodriver", adding "+x"
-      become: yes
-      file: dest=/usr/local/bin/geckodriver mode=a+x
 
     - name: Install pyvirtualdisplay
       become: yes
@@ -63,3 +40,6 @@
         module: pip
         name: future
         state: present
+
+    - include: ../tasks/chromium.yml
+      tags: chrome
