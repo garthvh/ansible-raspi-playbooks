@@ -17,8 +17,7 @@
 # Update apt packages
 - name: Update apt packages
   become: yes
-  apt: 
-    update_cache=yes
+  shell: apt-get update
   tags:
     - chrome
 
@@ -28,6 +27,7 @@
   apt:
     name: chromium
     state: present
+    allow_unauthenticated: yes
   tags:
     - chrome
 
@@ -37,6 +37,7 @@
   apt:
     name: chromedriver
     state: present
+    allow_unauthenticated: yes
   tags:
     - chrome
 

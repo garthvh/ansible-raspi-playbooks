@@ -11,14 +11,20 @@
     # Clon InstaPy https://github.com/timgrossmann/InstaPy
     - git:
         repo: https://github.com/timgrossmann/InstaPy.git
-        dest: {{ instapy_path }}
+        dest: "{{ instapy_path }}"
 
     # Create a virtual environment
     - name: Install requirements
       pip: 
-        requirements: {{ instapy_path }}/requirements.txt
+        requirements: "{{ instapy_path }}/requirements.txt"
         virtualenv: /home/pi/.virtualenvs/instapy36
         virtualenv_python: python3.6
+
+    # Install retrying
+    - name: Install retrying
+      pip:
+        name: retrying
+        virtualenv: /home/pi/.virtualenvs/instapy36
 
     # Install xvfb
     - name: Install the package "xvfb"
