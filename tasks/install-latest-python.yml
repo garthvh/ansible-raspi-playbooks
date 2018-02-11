@@ -1,0 +1,48 @@
+# Install python
+# Depends on:
+#   tasks:
+#       tasks/base_packages.yml
+#
+
+# Download and unzip latest python file
+- name: Download and unzip latest python file
+  unarchive:
+    src: https://www.python.org/ftp/python/{{ python_version }}/Python-{{ python_version }}.tar.xz
+    dest: /home/pi
+    remote_src: yes
+
+- name: Configure python
+  become: yes
+  shell: yes 'y' | ./configure
+  args:
+    chdir: /home/pi/Python-{{ python_version }}
+  register: python_output
+
+- name: Show python installation output
+  debug: msg="{{ python_output.stdout_lines }}"
+
+- name: Run make for python
+  become: yes
+  shell: yes 'y' | make
+  args:
+    chdir: /home/pi/Python-{{ python_version }}
+  register: python_output
+
+- name: Show python installation output
+  debug: msg="{{ python_output.stdout_lines }}"
+
+- name: Run altinstall for python
+  become: yes
+  shell: yes 'y' | make altinstall
+  args:
+    chdir: /home/pi/Python-{{ python_version }}
+  register: python_output
+
+- name: Show python installation output
+  debug: msg="{{ python_output.stdout_lines }}"
+
+- name: Remove python source code
+  become: yes
+  file:
+    state: absent
+    path: /home/pi/Python-{{ python_version }}

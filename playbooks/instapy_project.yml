@@ -1,0 +1,51 @@
+# ansible-playbook playbooks/instapy_project.yml -i hosts --ask-pass --become -c paramiko
+# Assumes base_setup.yml was run before this
+---
+- hosts: defaultdevices
+  gather_facts: yes
+  vars:
+    instapy_path: "/home/pi/code/InstaPy"
+
+  tasks:
+
+    # Clon InstaPy https://github.com/timgrossmann/InstaPy
+    - git:
+        repo: https://github.com/timgrossmann/InstaPy.git
+        dest: "{{ instapy_path }}"
+
+    # Create a virtual environment
+    - name: Install requirements
+      pip: 
+        requirements: "{{ instapy_path }}/requirements.txt"
+        virtualenv: /home/pi/.virtualenvs/instapy36
+        virtualenv_python: python3.6
+
+    # Install retrying
+    - name: Install retrying
+      pip:
+        name: retrying
+        virtualenv: /home/pi/.virtualenvs/instapy36
+
+    # Install xvfb
+    - name: Install the package "xvfb"
+      become: yes
+      apt:
+        name: xvfb
+        state: present
+
+    - name: Install pyvirtualdisplay
+      become: yes
+      action:
+        module: pip
+        name: pyvirtualdisplay
+        state: present
+
+    - name: Install future
+      become: yes
+      action:
+        module: pip
+        name: future
+        state: present
+
+    - include: ../tasks/chromium.yml
+      tags: chrome

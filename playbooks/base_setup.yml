@@ -1,4 +1,4 @@
-# ansible-playbook -i ~/ansible/hosts /playbooks/new-default.yml
+# ansible-playbook playbooks/base_setup.yml -i hosts --ask-pass --become -c paramiko
 ---
 - hosts: defaultdevices
   gather_facts: yes
@@ -7,7 +7,10 @@
     locale: "en_US.UTF-8"
     keyboard: "pc104"
     keyboard_layout: "us"
-    timezone: America/Los_Angeles
+    virtualenvwrapper_source: "/usr/local/bin/virtualenvwrapper.sh"
+    virtualenvwrapper_home: "/home/pi/.virtualenvs/"
+    virtualenvwrapper_shell_file: "/home/pi/.bashrc"
+    timezone: America/New_York
     locale_options:
       # Disable Default (GB) Locale
       - regexp: "^#?en_GB.UTF-8 UTF-8"
@@ -21,15 +24,18 @@
   - name: hostname
     prompt: "please enter a hostname for your new device:"
     private: no
-  - name: wifi_ssid
-    prompt: "please enter the WiFi SSID for your new device:"
-    private: no
-  - name: wifi_password
-    prompt: "please enter the WiFi password for your new device:"
-    private: yes
+  # - name: wifi_ssid
+  #   prompt: "please enter the WiFi SSID for your new device:"
+  #   private: no
+  # - name: wifi_password
+  #   prompt: "please enter the WiFi password for your new device:"
+  #   private: yes
   - name: ssh_key
     prompt: "please enter the SSH Key for your new device:"
     private: yes
+  - name: python_version
+    prompt: "please enter the python version number (above 2.7) that you would like to install in the form X.X.X:"
+    private: no
 
   tasks:
 
@@ -42,8 +48,8 @@
       tags: setup
 
     # Set WiFi Options
-    - include: ../tasks/wifi.yml
-      tags: setup
+    # - include: ../tasks/wifi.yml
+    #   tags: setup
 
     - name: Create SSH folder
       file: path=~/.ssh state=directory
@@ -59,8 +65,34 @@
     - include: ../tasks/update.yml
       tags: update
 
+    # Install base apt packages and libraries
+    - include: ../tasks/base_packages.yml
+      tags: setup
+
+    # Download and install latest python version
+    - include: ../tasks/install-latest-python.yml
+      tags: setup
+
+    # Install python libraries
+    - include: ../tasks/install-python-modules.yml
+      tags: setup
+
+    # Configure virtualenvwrapper
+    - include: ../tasks/virtualenvwrapper-configuration.yml
+      tags:
+        - virtualenvwrapper
+        - virtualenvwrapper.configuration
+
     # Set the hostname
     - include: ../tasks/hostname.yml
+      tags: setup
+
+    # Copy shell files
+    - include: ../tasks/shell_files.yml
+      tags: setup
+
+    # Build directories
+    - include: ../tasks/build_dirs.yml
       tags: setup
 
   handlers:
@@ -70,5 +102,3 @@
 
     - include: ../handlers/tzdata.yml
       tags: system
-
-  

@@ -1,0 +1,18 @@
+# Install python modules
+# Depends on:
+#   tasks:
+#       tasks/install-latest-python.yml
+#
+
+- name: Install virtualenvwrapper
+  become: yes
+  action:
+    module: pip
+    name: virtualenvwrapper
+    state: present
+
+- name: Install virtualenvwrapper for pi user
+  action:
+    module: pip
+    name: virtualenvwrapper
+    state: present

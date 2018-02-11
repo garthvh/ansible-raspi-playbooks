@@ -1,0 +1,12 @@
+# Install shell files
+# Depends on:
+#   tasks:
+#       tasks/hostname.yml
+#   
+
+# Copy bash aliases file
+- copy:
+    src: ../bash_aliases
+    dest: /home/pi/.bash_aliases
+    owner: pi
+    mode: 0644

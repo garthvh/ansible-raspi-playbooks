@@ -1,0 +1,69 @@
+# Configure chromium
+#
+
+# Followed https://packages.debian.org/stretch/arm64/chromium/download
+- name: Add chrome mirrors to apt-get path
+  action:
+    module: lineinfile
+    dest: "/etc/apt/sources.list"
+    regexp: "deb http://security.debian.org/debian-security stretch/updates main"
+    line: "deb http://security.debian.org/debian-security stretch/updates main"
+    state: present
+    backup: yes
+    create: yes
+  tags:
+    - chrome
+
+# Update apt packages
+- name: Update apt packages
+  become: yes
+  shell: apt-get update
+  tags:
+    - chrome
+
+# Install chromium
+- name: Install the package "chromium"
+  become: yes
+  apt:
+    name: chromium
+    state: present
+    allow_unauthenticated: yes
+  tags:
+    - chrome
+
+# Install chromedriver
+- name: Install the package "chromedriver"
+  become: yes
+  apt:
+    name: chromedriver
+    state: present
+    allow_unauthenticated: yes
+  tags:
+    - chrome
+
+# Move chromedriver to instapy assets folder
+- name: See if chromedriver is in /usr/bin
+  stat: path=/usr/bin/chromedriver
+  register: chromedriver_1
+  tags:
+    - chrome
+
+- name: Move chromedriver to assets folder
+  become: yes
+  command: mv /usr/bin/chromedriver {{ instapy_path }}/assets/chromedriver
+  when: chromedriver_1.stat.exists
+  tags:
+    - chrome
+
+- name: See if chromedriver is in /usr/local/bin
+  stat: path=/usr/local/bin/chromedriver
+  register: chromedriver_2
+  tags:
+    - chrome
+
+- name: Move chromedriver to assets folder
+  become: yes
+  command: mv /usr/bin/chromedriver {{ instapy_path }}/assets/chromedriver
+  when: chromedriver_2.stat.exists
+  tags:
+    - chrome
