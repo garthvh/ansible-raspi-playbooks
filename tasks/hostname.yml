@@ -8,3 +8,8 @@
 - name: Set the hostname
   become: yes
   command: hostnamectl set-hostname "{{ hostname }}"
+
+# Set the hostname in /etc/hosts too
+- name: Set the other hostname
+  become: yes
+  command: sed -i "s/127.0.1.1.*raspberrypi/127.0.1.1\t{{ hostname }}/g" /etc/hosts
