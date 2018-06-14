@@ -1,6 +1,7 @@
 # ansible-playbook -i ~/ansible/hosts /playbooks/setup-retropie-pi-cade.yml
 ---
-- gather_facts: yes
+- hosts: picades
+  gather_facts: yes
   vars:
 
     smb_rom_share: //VHSTORE/ROMS
