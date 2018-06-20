@@ -63,12 +63,10 @@
     - include_tasks: ../tasks/hostname.yml
       tags: setup
 
-  handlers:
-
-    - include_tasks: ../handlers/reboot.yml
+    - include_tasks: ../tasks/reboot.yml
       tags: system
 
-    - include_tasks: ../handlers/tzdata.yml
+    - include_tasks: ../tasks/tzdata.yml
       tags: system
 
   
