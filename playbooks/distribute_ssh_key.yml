@@ -1,39 +1,11 @@
-# ansible-playbook -i ~/ansible/hosts /playbooks/new-default.yml
+# ansible-playbook -i ~/ansible/hosts /playbooks/distribute_ssh_key.yml
 ---
 - hosts: allpi
   gather_facts: yes
-  vars:
-    wifi_country: "US"
-    locale: "en_US.UTF-8"
-    keyboard: "pc104"
-    keyboard_layout: "us"
-    timezone: America/Los_Angeles
-    locale_options:
-      # Disable Default (GB) Locale
-      - regexp: "^#?en_GB.UTF-8 UTF-8"
-        line: "# en_GB.UTF-8 UTF-8"
-      # Enable US Locale
-      - regexp: "^#?en_US.UTF-8 UTF-8"
-        line: "en_US.UTF-8 UTF-8"
-
-  vars_prompt:
-
-  - name: hostname
-    prompt: "please enter a hostname for your new device:"
-    private: no
-  - name: wifi_ssid
-    prompt: "please enter the WiFi SSID for your new device:"
-    private: no
-  - name: wifi_password
-    prompt: "please enter the WiFi password for your new device:"
-    private: yes
-  - name: ssh_key
-    prompt: "please enter the SSH Key for your new device:"
-    private: yes
 
   tasks:
     - name: Set authorized key took from file
       authorized_key:
-        user: garth
+        user: pi
         state: present
-        key: "{{ lookup('file', '/home/garth/.ssh/id_rsa.pub') }}"
+        key: "{{ lookup('file', '/home/pi/.ssh/id_rsa.pub') }}"
