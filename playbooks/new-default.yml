@@ -34,15 +34,15 @@
   tasks:
 
     # Expand the filesystem
-    - include: ../tasks/expand-filesystem.yml
+    - include_tasks: ../tasks/expand-filesystem.yml
       tags: setup
 
     # Set Internationalization Options
-    - include: ../tasks/internationalization.yml
+    - include_tasks: ../tasks/internationalization.yml
       tags: setup
 
     # Set WiFi Options
-    - include: ../tasks/wifi.yml
+    - include_tasks: ../tasks/wifi.yml
       tags: setup
 
     - name: Create SSH folder
@@ -56,19 +56,19 @@
       command: dpkg --configure -a
 
     # Run apt-get update and apt-get upgrade 
-    - include: ../tasks/update.yml
+    - include_tasks: ../tasks/update.yml
       tags: update
 
     # Set the hostname
-    - include: ../tasks/hostname.yml
+    - include_tasks: ../tasks/hostname.yml
       tags: setup
 
   handlers:
 
-    - include: ../handlers/reboot.yml
+    - include_tasks: ../handlers/reboot.yml
       tags: system
 
-    - include: ../handlers/tzdata.yml
+    - include_tasks: ../handlers/tzdata.yml
       tags: system
 
   
