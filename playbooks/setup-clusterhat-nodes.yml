@@ -18,22 +18,20 @@
   tasks:
 
     # Expand the filesystem
-    - include: ../tasks/expand-filesystem.yml
+    - include_tasks: ../tasks/expand-filesystem.yml
       tags: setup
 
     # Set Internationalization Options
-    - include: ./tasks/internationalization.yml
+    - include_tasks: ./tasks/internationalization.yml
       tags: setup
 
     # Run apt-get update and apt-get upgrade 
-    - include: ./tasks/update.yml
+    - include_tasks: ./tasks/update.yml
       tags: update
 
-  handlers:
-
-    - include: ../handlers/reboot.yml
+    - include_tasks: ../tasks/tzdata.yml
       tags: system
 
-    - include: ../handlers/tzdata.yml
+    - include_tasks: ../tasks/reboot.yml
       tags: system
 

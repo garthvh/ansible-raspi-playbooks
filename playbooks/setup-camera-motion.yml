@@ -21,7 +21,7 @@
   tasks:
 
     # Run apt-get update and apt-get upgrade 
-    - include: ../tasks/update.yml
+    - include_tasks: ../tasks/update.yml
       tags: update
 
     - name: Install dependancies from apt

@@ -63,10 +63,8 @@
     - include_tasks: ../tasks/hostname.yml
       tags: setup
 
-    - include_tasks: ../tasks/reboot.yml
-      tags: system
-
     - include_tasks: ../tasks/tzdata.yml
       tags: system
 
-  
+    - include_tasks: ../tasks/reboot.yml
+      tags: system

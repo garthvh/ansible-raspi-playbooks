@@ -53,7 +53,7 @@
   tasks:
 
     # Run apt-get update and apt-get upgrade 
-    - include: ../tasks/update.yml
+    - include_tasks: ../tasks/update.yml
       tags: update
 
     - name: Install dependancies from apt
@@ -73,9 +73,7 @@
       with_items: "{{ boot_config_options }}"
 
     # Copy roms using smbclient
-    - include: ../tasks/copy-retropie-roms.yml
+    - include_tasks: ../tasks/copy-retropie-roms.yml
 
-  handlers:
-
-    - include: ../handlers/reboot.yml
+    - include_tasks: ../tasks/reboot.yml
       tags: system

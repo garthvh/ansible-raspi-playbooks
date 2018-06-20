@@ -161,8 +161,6 @@
       become: yes
       command: echo "SUBSYSTEM==\"input\", ATTRS{name}==\"retrogame\", ENV{ID_INPUT_KEYBOARD}=\"1\"" > /etc/udev/rules.d/10-retrogame.rules
 
-  handlers:
-
-    - include: ../handlers/reboot.yml
+    - include_tasks: ../tasks/reboot.yml
       tags: system
 

@@ -147,10 +147,7 @@
       # SLi3r Prusa Editions
       # Simplify 3D
 
-
-  handlers:
-
-    - include: ../handlers/reboot.yml
+    - include_tasks: ../tasks/reboot.yml
       tags: system
 
   
