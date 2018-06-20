@@ -1,6 +1,6 @@
 # ansible-playbook -i ~/ansible/hosts /playbooks/new-default.yml
 ---
-- hosts: defaultdevices
+- hosts: allpi
   gather_facts: yes
   vars:
     wifi_country: "US"
