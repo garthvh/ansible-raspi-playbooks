@@ -51,4 +51,3 @@
 - name: set /etc/default/keyboard
   become: yes
   template: src=../templates/keyboard dest=/etc/default/keyboard
-  notify: reboot
