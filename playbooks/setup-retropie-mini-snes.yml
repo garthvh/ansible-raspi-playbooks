@@ -74,6 +74,3 @@
 
     # Copy roms using smbclient
     - include_tasks: ../tasks/copy-retropie-roms.yml
-
-    - include_tasks: ../tasks/reboot.yml
-      tags: system
