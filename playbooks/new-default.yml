@@ -3,6 +3,9 @@
 - hosts: defaultdevices
   gather_facts: yes
   vars:
+    hostname: your_hostname
+    wifi_ssid: your_ssid
+    wifi_password: your_wifi_password
     wifi_country: "US"
     locale: "en_US.UTF-8"
     keyboard: "pc104"
@@ -15,21 +18,6 @@
       # Enable US Locale
       - regexp: "^#?en_US.UTF-8 UTF-8"
         line: "en_US.UTF-8 UTF-8"
-
-  vars_prompt:
-
-  - name: hostname
-    prompt: "please enter a hostname for your new device:"
-    private: no
-  - name: wifi_ssid
-    prompt: "please enter the WiFi SSID for your new device:"
-    private: no
-  - name: wifi_password
-    prompt: "please enter the WiFi password for your new device:"
-    private: yes
-  - name: ssh_key
-    prompt: "please enter the SSH Key for your new device:"
-    private: yes
 
   tasks:
 
@@ -48,8 +36,11 @@
     - name: Create SSH folder
       file: path=~/.ssh state=directory
 
-    - name: Set up SSH Key from a template
-      template: src=../templates/authorized_keys dest=~/.ssh/authorized_keys
+    - name: Set authorized key took from file
+      authorized_key:
+        user: pi
+        state: present
+        key: "{{ lookup('file', '/home/garth/.ssh/id_rsa.pub') }}"
 
     - name: run 'dpkg --configure -a'
       become: yes
@@ -64,7 +55,4 @@
       tags: setup
 
     - include_tasks: ../tasks/tzdata.yml
-      tags: system
-
-    - include_tasks: ../tasks/reboot.yml
       tags: system
