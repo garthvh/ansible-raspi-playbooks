@@ -18,7 +18,7 @@
       - regexp: "^#?en_US.UTF-8 UTF-8"
         line: "en_US.UTF-8 UTF-8"
 
-  - vars_prompt:
+  vars_prompt:
 
     - name: hostname
       prompt: "please enter a hostname for your new device:"
