@@ -15,5 +15,3 @@
 - name: update wpa_supplicant file
   become: yes
   template: src=../templates/wpa_supplicant.conf dest=/etc/wpa_supplicant/wpa_supplicant.conf
-  notify: 
-    - reboot
