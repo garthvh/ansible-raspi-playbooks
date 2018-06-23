@@ -8,5 +8,3 @@
 - name: Expand filesystem to fill disk
   command: raspi-config --expand-rootfs
   become: yes
-  notify:
-    - reboot
