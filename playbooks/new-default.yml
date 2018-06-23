@@ -33,22 +33,23 @@
     - include_tasks: ../tasks/wifi.yml
       tags: setup
 
-    - name: Create SSH folder
-      file: path=~/.ssh state=directory
-
-    - name: Set authorized key took from file
-      authorized_key:
-        user: pi
-        state: present
-        key: "{{ lookup('file', '/home/garth/.ssh/id_rsa.pub') }}"
-
     - name: run 'dpkg --configure -a'
       become: yes
       command: dpkg --configure -a
 
     # Run apt-get update and apt-get upgrade 
-    - include_tasks: ../tasks/update.yml
-      tags: update
+
+    # Update apt packages
+    - name: Update apt packages
+      become: yes
+      apt: 
+        update_cache=yes
+
+    # Upgrade apt packages
+    - name: Upgrade apt packages
+      become: yes
+      apt: 
+        upgrade=dist
 
     # Set the hostname
     - include_tasks: ../tasks/hostname.yml
