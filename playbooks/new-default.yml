@@ -1,11 +1,10 @@
 # ansible-playbook -i ~/ansible/hosts /playbooks/new-default.yml
+# semaphore / cli argument example for vars_prompt
+#   ex: ["-e","hostname='your_hostname' wifi_ssid='your_ssid' wifi_password='your_password'"] 
 ---
 - hosts: defaultdevices
   gather_facts: yes
   vars:
-    hostname: your_hostname
-    wifi_ssid: your_ssid
-    wifi_password: your_wifi_password
     wifi_country: "US"
     locale: "en_US.UTF-8"
     keyboard: "pc104"
@@ -18,6 +17,18 @@
       # Enable US Locale
       - regexp: "^#?en_US.UTF-8 UTF-8"
         line: "en_US.UTF-8 UTF-8"
+
+  - vars_prompt:
+
+    - name: hostname
+      prompt: "please enter a hostname for your new device:"
+      private: no
+    - name: wifi_ssid
+      prompt: "please enter the WiFi SSID for your new device:"
+      private: no
+    - name: wifi_password
+      prompt: "please enter the WiFi password for your new device:"
+      private: yes
 
   tasks:
 
@@ -33,33 +44,13 @@
     - include_tasks: ../tasks/wifi.yml
       tags: setup
 
-    - name: run 'dpkg --configure -a'
-      become: yes
-      command: dpkg --configure -a
-
     # Run apt-get update and apt-get upgrade 
-
-    # Update apt packages
-    - name: Update apt packages
-      become: yes
-      apt: 
-        update_cache=yes
-
-    # Upgrade apt packages
-    - name: Upgrade apt packages
-      become: yes
-      apt: 
-        upgrade=dist
+    - include_tasks: ../tasks/update.yml
+      tags: update
 
     # Set the hostname
-    - name: Set the hostname
-      become: yes
-      command: hostnamectl set-hostname "{{ hostname }}"
-
-    # Set the hostname in /etc/hosts too
-    - name: Set the other hostname
-      become: yes
-      command: sed -i "s/127.0.1.1.*raspberrypi/127.0.1.1\t{{ hostname }}/g" /etc/hosts
+    - include_tasks: ../tasks/hostname.yml
+      tags: setup
 
     - include_tasks: ../tasks/tzdata.yml
       tags: system
