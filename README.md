@@ -10,6 +10,11 @@ All of the setup can be done remotely over the network without login, I found th
 
 So far I have found an easy way in Ansible to complete every step of the setup for my projects. There are a ton of well documented modules in ansible and I was able to easily handle apt, git boot/config.txt settings, making reusable tasks and handlers, setting up wifi with a template, installing the SSH key and collecting sensitive inputs with prompts.
 
+## Ansible Semaphore
+![Semaphore Task Templates Screenshot](https://garthvh.com/assets/img/semaphore/semaphore_task_templates.png)
+
+All of the playbooks in the repo with the exception of the distribute_ssh playbook are now compatable with the latest version of ansible and work with ansible semaphore.
+
 ## Ansible Controller and SSH Keys Setup
 I am using a Raspberry Pi 2 B+ model as a server for ansible, I pull down the repository via git and run ansible commands over SSH.
 
