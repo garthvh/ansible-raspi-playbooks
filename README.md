@@ -13,24 +13,13 @@ So far I have found an easy way in Ansible to complete every step of the setup f
 ## Ansible Semaphore
 ![Semaphore Task Templates Screenshot](https://garthvh.com/assets/img/semaphore/semaphore_task_templates.png)
 
-All of the playbooks in the repo with the exception of the distribute_ssh playbook are now compatable with the latest version of ansible and work with ansible semaphore.
-
-I have been using semaphore and a mariadb database deployed to docker containers on my NAS device.  For playbooks that use vars_prompts I am passing the prompt variable into the playbook using the "Extra CLI Arguments" box on the semaphore task template. Using the -e (extra vars) CLI argument I am passing in the vars that would be prompted for when running the playbook in bash.
+I have been using semaphore and a mariadb database deployed to docker containers on my NAS device.  For playbooks that use vars_prompts I am passing the prompt variable into the playbook using the "Extra CLI Arguments" box on the semaphore task template. Using the -e (extra vars) CLI argument I am passing in the vars that would be prompted for when running the playbook in bash. I use PiBakery instead of the inital setup script now, but I have kept the new-default playbook up to date.
 
     ["-e","hostname='your_hostname' wifi_ssid='your_ssid' wifi_password='your_pass'"]
 
-## Ansible Controller and SSH Keys Setup
-I am using a Raspberry Pi 2 B+ model as a server for ansible, I pull down the repository via git and run ansible commands over SSH.
+##  PiBakery and Ansible Semaphore 
+I start all devices by setting up the sd card with [PiBakery](https://www.pibakery.org/).  This lets me do wifi, ssh and hostname before even booking the pi.  My setting for PiBakery are available at [here](/pibakery/pibakery_new.xml) 
 
-### SSH Keys for login
-A SSH key is used to automatically login to each device being managed. 
-
-Set up a public/private keypair on the controller computer you will be running ansible from.
-
-    ssh-keygen -t rsa -b 4096 -f ~/.ssh/id_rsa
-    cat ~/.ssh/id_rsa.pub
-
-On each device the initial setup script will manage the SSH key for you.
 
 ### Ansible hosts file / Semaphore Inventory
 If you are running ansible from a bash shell you will need to set up an ansible hosts file

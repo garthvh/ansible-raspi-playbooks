@@ -1,0 +1,49 @@
+<xml 
+  xmlns="http://www.w3.org/1999/xhtml">
+  <block type="onfirstboot" id="onfirstboot" x="59" y="53">
+    <next>
+      <block type="wifisetup" id="#RidO}N57-@u%6Ft+wK]">
+        <field name="1">ssid</field>
+        <field name="2">password</field>
+        <field name="3">WPA/WPA2</field>
+        <field name="4">US</field>
+        <next>
+          <block type="authorizekey" id="f[IPrE[`drt*[^j0G=LL">
+            <field name="1">pub key</field>
+            <field name="2">pi</field>
+            <next>
+              <block type="runcommand" id="]Nc|iYC2wb{L-k5uYu5R">
+                <field name="1">raspi-config nonint do_hostname mini-nes-1</field>
+                <field name="2">root</field>
+                <next>
+                  <block type="runcommand" id="/c3h5sf/aTA[rl!%A+){">
+                    <field name="1">raspi-config nonint do_change_locale en_US.UTF-8</field>
+                    <field name="2">root</field>
+                    <next>
+                      <block type="runcommand" id="MCtD0u8j6z]@2m7,qKGj">
+                        <field name="1">raspi-config nonint do_configure_keyboard us</field>
+                        <field name="2">root</field>
+                        <next>
+                          <block type="runcommand" id="2}=bwu6y7VrLz^}R;ChW">
+                            <field name="1">raspi-config nonint do_ssh 0</field>
+                            <field name="2">root</field>
+                            <next>
+                              <block type="reboot" id="_9_rkI:T%Z6]Kh|gG0b%"></block>
+                            </next>
+                          </block>
+                        </next>
+                      </block>
+                    </next>
+                  </block>
+                </next>
+              </block>
+            </next>
+          </block>
+        </next>
+      </block>
+    </next>
+  </block>
+  <firstboot 
+    xmlns="">0
+  </firstboot>
+</xml>
