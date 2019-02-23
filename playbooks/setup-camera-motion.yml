@@ -6,19 +6,19 @@
 
     boot_config_options:
 
-      # Set the GPU memory split value. 128 in the minimum for the camera
-      - regexp: "^#?gpu_mem"
-        line: "gpu_mem=128"
-
-      # Enable Camera
-      - regexp: "^#?start_x"
-        line: "start_x=1"
-
       # Disable Camera LED 1 is disabled, 0 is enabled
       - regexp: "^#?disable_camera_led"
         line: "disable_camera_led=0"
 
   tasks:
+
+    - name: Set the GPU memory split value via raspi-config - 128 iS the minimum for the camera
+      become: yes
+      command: raspi-config nonint do_memory_split gpu_mem_1024=128
+
+    - name: Enable the camera via raspi-config
+      become: yes
+      command: raspi-config nonint do_camera 0
 
     # Run apt-get update and apt-get upgrade 
     - include_tasks: ../tasks/update.yml

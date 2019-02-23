@@ -26,9 +26,6 @@
       - regexp: "^#?dtparam=i2c_arm"
         line: "dtparam=i2c_arm=on"
 
-      - regexp: "^#?dtparam=spi"
-        line: "dtparam=spi=on"
-
       - regexp: "^#?dtparam=audio"
         line: "dtparam=audio=on"
 
@@ -44,6 +41,10 @@
         line: "ClientSecret={{ amazon_client_secret }}"
 
   tasks:
+
+    - name: Enable SPI via raspi-config
+      become: yes
+      command: raspi-config nonint do_spi 0
 
     # Run apt-get update and apt-get upgrade 
     - include_tasks: ../tasks/update.yml

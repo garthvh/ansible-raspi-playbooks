@@ -1,4 +1,4 @@
-# Non interactive raspi-config commands
+# Non interactive raspi-config command ansible yml examples
 - name: Expand the filesystem via raspi-config
   become: yes
   command: raspi-config nonint do_expand_rootfs
@@ -52,10 +52,12 @@
   command: raspi-config nonint do_wifi_country US
 
 - name: Set the GPU memory split value via raspi-config
-    become: yes
-    command: raspi-config nonint do_memory_split gpu_mem_1024=256
+  become: yes
+  command: raspi-config nonint do_memory_split gpu_mem_1024=256
+
+- name: Set the resolution via raspi-config - group 1 mode 4 - 720P 60Hz
+  become: yes
+  command: raspi-config nonint do_resolution 1 4
 
 #define SET_OVERCLOCK   "raspi-config nonint do_overclock %s"
-#define SET_HDMI_GP_MOD "raspi-config nonint do_resolution %d %d"
 #define CHANGE_PASSWD   "(echo \"%s\" ; echo \"%s\") | passwd $SUDO_USER"
-

@@ -12,10 +12,6 @@
       - regexp: "^#?dtparam"
         line: "dtparam=audio=on"
 
-      # Set the GPU memory split value.
-      - regexp: "^#?gpu_mem_1024"
-        line: "gpu_mem_1024=256"
-
       # HDMI & Screen
       - regexp: "^#?hdmi_force_hotplug"
         line: "hdmi_force_hotplug=1"
@@ -38,10 +34,13 @@
         line: "/usr/local/bin/retrogame &"
 
   tasks:
-
-    - name: upgrade packages
+    - name: Set the GPU memory split value via raspi-config
       become: yes
-      apt: upgrade=dist update_cache=yes
+      command: raspi-config nonint do_memory_split gpu_mem_1024=256
+
+    # Run apt-get update and apt-get upgrade 
+    - include_tasks: ../tasks/update.yml
+      tags: update
 
     - name: Install dependancies from apt
       become: yes

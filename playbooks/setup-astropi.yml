@@ -11,10 +11,6 @@
       - regexp: "^#?dtoverlay=astropi-keys"
         line: "dtoverlay=astropi-keys"
 
-      # Set the GPU memory split value.
-      - regexp: "^#?gpu_mem_1024"
-        line: "gpu_mem_1024=256"
-
       # 720p HDMI Output
       - regexp: "^#?hdmi_force_hotplug"
         line: "hdmi_force_hotplug=1"
@@ -32,6 +28,10 @@
     # Run apt-get update and apt-get upgrade 
     - include_tasks: ../tasks/update.yml
       tags: update
+
+    - name: Set the GPU memory split value via raspi-config
+      become: yes
+      command: raspi-config nonint do_memory_split gpu_mem_1024=256
 
     # Configure boot/config.txt values
     - name: Configure option values in /boot/config.txt file.

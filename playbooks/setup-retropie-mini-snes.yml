@@ -32,7 +32,6 @@
       become: yes
       command: raspi-config nonint do_resolution 1 4
 
-    # Text file based update of boot/config.txt values 
     - name: Configure option values in /boot/config.txt file.
       become: yes
       lineinfile:

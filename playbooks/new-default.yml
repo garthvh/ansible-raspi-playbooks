@@ -7,16 +7,8 @@
   vars:
     wifi_country: "US"
     locale: "en_US.UTF-8"
-    keyboard: "pc104"
     keyboard_layout: "us"
     timezone: America/Los_Angeles
-    locale_options:
-      # Disable Default (GB) Locale
-      - regexp: "^#?en_GB.UTF-8 UTF-8"
-        line: "# en_GB.UTF-8 UTF-8"
-      # Enable US Locale
-      - regexp: "^#?en_US.UTF-8 UTF-8"
-        line: "en_US.UTF-8 UTF-8"
 
   vars_prompt:
 
@@ -31,10 +23,6 @@
       private: yes
 
   tasks:
-
-    # Expand the filesystem
-    - include_tasks: ../tasks/expand-filesystem.yml
-      tags: setup
 
     # Set Internationalization Options
     - include_tasks: ../tasks/internationalization.yml
