@@ -18,7 +18,7 @@ I have been using semaphore and a mariadb database deployed to docker containers
     ["-e","hostname='your_hostname' wifi_ssid='your_ssid' wifi_password='your_pass'"]
 
 ##  PiBakery and Ansible Semaphore 
-I start all devices by setting up the sd card with [PiBakery](https://www.pibakery.org/).  This lets me do wifi, ssh and hostname before even booking the pi.  My setting for PiBakery are available at [here](/pibakery/pibakery_new.xml) 
+I start all devices by setting up the sd card with [PiBakery](https://www.pibakery.org/).  This lets me do wifi, ssh and hostname before even booting the pi.  My setting for PiBakery are available at [here](/pibakery/pibakery_new.xml) 
 
 
 ### Ansible hosts file / Semaphore Inventory
@@ -85,17 +85,7 @@ The new-default.yml playbook will do the following for hosts named "raspberrypi"
 + Setup WiFi
     * Set WiFi Country
 + Update and Upgrade apt packages
-+ Put the ssh key in place
 + Set the hostname
-
-You will need to add the default "raspberry" password and pi user info for the default devices only in your ansible hosts file since this script will put the SSH key in place.
-
-    [defaultdevices] # Default hostnames for raspbian and retropie devices 
-    retropie
-    raspberrypi
-    [defaultdevices:vars]
-    ansible_user=pi
-    ansible_ssh_pass=raspberry
 
 You can run the playbook with the following command:
 
@@ -106,12 +96,6 @@ The playbook will prompt you for the following items during setup:
 + Hostname
 + WiFi SSID
 + WiFi password
-+ SSH Key
-
-For Raspbian Pixel based projects I still have to connect the project to a keyboard and monitor once to enable SSH and I2C. 
-
-## Project Playbooks
-Each playbook does the remaining setup for each different project using the SSH key installed by the new-default.yml playbook to login.
 
 ### Alexa Pi Vending Machine
 Housed in the [venduino](http://www.retrobuiltgames.com/diy-kits-shop/venduino/) laser cut wood case there are 5 buttons (4 on the front one on the back), 12 RGB LEDs, 4 continuous rotation servos, an Adafruit servo driver board, a Nokia LCD and a USB CM108 microphone.

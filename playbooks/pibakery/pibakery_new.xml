@@ -13,7 +13,7 @@
             <field name="2">pi</field>
             <next>
               <block type="runcommand" id="]Nc|iYC2wb{L-k5uYu5R">
-                <field name="1">raspi-config nonint do_hostname mini-nes-1</field>
+                <field name="1">raspi-config nonint do_hostname hostname</field>
                 <field name="2">root</field>
                 <next>
                   <block type="runcommand" id="/c3h5sf/aTA[rl!%A+){">
