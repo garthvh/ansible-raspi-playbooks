@@ -15,6 +15,10 @@ So far I have found an easy way in Ansible to complete every step of the setup f
 
 All of the playbooks in the repo with the exception of the distribute_ssh playbook are now compatable with the latest version of ansible and work with ansible semaphore.
 
+I have been using semaphore and a mariadb database deployed to docker containers on my NAS device.  For playbooks that use vars_prompts I am passing the prompt variable into the playbook using the "Extra CLI Arguments" box on the semaphore task template. Using the -e (extra vars) CLI argument I am passing in the vars that would be prompted for when running the playbook in bash.
+
+    ["-e","hostname='your_hostname' wifi_ssid='your_ssid' wifi_password='your_pass'"]
+
 ## Ansible Controller and SSH Keys Setup
 I am using a Raspberry Pi 2 B+ model as a server for ansible, I pull down the repository via git and run ansible commands over SSH.
 
@@ -28,7 +32,8 @@ Set up a public/private keypair on the controller computer you will be running a
 
 On each device the initial setup script will manage the SSH key for you.
 
-### Ansible hosts file
+### Ansible hosts file / Semaphore Inventory
+If you are running ansible from a bash shell you will need to set up an ansible hosts file
 I have an ansible host file ~/ansible/hosts set up with all of my device hostnames.
 
     # Hostnames for devices 

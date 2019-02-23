@@ -1,0 +1,61 @@
+# Non interactive raspi-config commands
+- name: Expand the filesystem via raspi-config
+  become: yes
+  command: raspi-config nonint do_expand_rootfs
+
+- name: Set the hostname via raspi-config
+  become: yes
+  command: raspi-config nonint do_hostname hostname
+
+- name: Enable the camera via raspi-config
+  become: yes
+  command: raspi-config nonint do_camera 0
+
+- name: Enable SSH via raspi-config
+  become: yes
+  command: raspi-config nonint do_ssh 0
+
+- name: Enable VNC via raspi-config
+  become: yes
+  command: raspi-config nonint do_vnc  0
+
+- name: Enable SPI via raspi-config
+  become: yes
+  command: raspi-config nonint do_spi 0
+
+- name: Enable I2C via raspi-config
+  become: yes
+  command: raspi-config nonint do_i2c 0
+
+- name: Enable serial via raspi-config
+  become: yes
+  command: raspi-config nonint do_serial 0
+
+- name: Enable one wire via raspi-config
+  become: yes
+  command: raspi-config nonint do_onewire 0
+
+- name: Enable GPIO via raspi-config
+  become: yes
+  command: raspi-config nonint do_rgpio 0
+
+- name: Set the locale via raspi-config
+  become: yes
+  command: raspi-config nonint do_change_locale en_US.UTF-8
+      
+- name: Set the keyboard layout via raspi-config
+  become: yes
+  command: raspi-config nonint do_configure_keyboard us
+
+- name: Set the wifi country via raspi-config
+  become: yes
+  command: raspi-config nonint do_wifi_country US
+
+- name: Set the GPU memory split value via raspi-config
+    become: yes
+    command: raspi-config nonint do_memory_split gpu_mem_1024=256
+
+#define SET_OVERCLOCK   "raspi-config nonint do_overclock %s"
+#define SET_HDMI_GP_MOD "raspi-config nonint do_resolution %d %d"
+#define CHANGE_PASSWD   "(echo \"%s\" ; echo \"%s\") | passwd $SUDO_USER"
+
