@@ -1,53 +1,26 @@
-# Ansible Playbooks for Raspberry Pi setup
+# Automated Raspberry Pi setup and updates
 
-This is my collection of some simple playbooks, templates and tasks for setup and configuration of my assorted raspberry pi boards and projects. Many common raspberry pi configuration options can now be set using the raspi-config noint mode, for anything else I have found the Ansible [lineinfile](http://docs.ansible.com/ansible/lineinfile_module.html) module is perfect for automating Raspberry Pi setup since much of the configuration is done via text files.
+This is my collection of some pibakery xml, playbooks, templates and tasks for setup and configuration of my assorted raspberry pi boards and projects. Many common raspberry pi configuration options can now be set using the raspi-config noint mode and for anything else I have found the Ansible [lineinfile](http://docs.ansible.com/ansible/lineinfile_module.html) module is perfect for automating configuration that is done via text files.
 
 The goal is to do as little manual setup of my raspberry pi projects as possible as well as creating a record of the setup and configuration that can be run again if there is a problem with the SD card, or if I need build another copy of the project. 
 
 So far I have found an easy way in Ansible to complete every step of the setup for my projects. There are a ton of well documented modules in ansible and I was able to easily handle apt, many raspi-config options, git, boot/config.txt settings, making reusable tasks and handlers, setting up wifi with a template, and collecting sensitive inputs with prompts.
 
-##  PiBakery
+## Prepare the SD Card using  PiBakery
 The first step now for all devices is setting up the sd card basics with [PiBakery](https://www.pibakery.org/) a code blocks pi sd card setup app which is available on Windows, Mac and Linux.  This lets you configure wifi, a public ssh key, locale, keyboard and hostname without having to connect or power on the pi. My settings for PiBakery are available at [here](https://github.com/garthvh/ansible-raspi-playbooks/blob/master/pibakery/pibakery_new.xml). If your project is not too complex, you may be able to save all the required settings to xml using PiBakery and not even have to use Ansible.  
 
 ![PiBakery  Screenshot](https://garthvh.com/assets/img/ansible/pibakery.png)
 
 ## Ansible Semaphore
-Semaphore is an open source GUI for ansible that is an alternative to the Ansible Tower product offered by redhat. I run it in a container and prefir it 
+[Semaphore](https://github.com/ansible-semaphore/semaphore) is an open source web ui for ansible that is an alternative to the Ansible Tower product offered by redhat. I run it in a container and find it a better fit for my home network than tower which needs a more powerful server and has device limits. Semaphore has a simple ui that maps nicely to the structures in Ansible and tracks playbook runs and groups inventory in sensible ways.
 
 ![Semaphore Task Templates Screenshot](https://garthvh.com/assets/img/semaphore/semaphore_task_templates.png)
 
+All of my playbooks run fine with or without a Semaphore server, I use it because it lets me keep better track of when playbooks run on what devices.
 
-I have been using semaphore and a mariadb database deployed to docker containers on my NAS device.  For playbooks that use vars_prompts I am passing the prompt variable into the playbook using the "Extra CLI Arguments" box on the semaphore task template. Using the -e (extra vars) CLI argument I am passing in the vars that would be prompted for when running the playbook in bash. I use PiBakery instead of the inital setup script now, but I have kept the new-default playbook up to date.
+ For playbooks that use vars_prompts I am passing the prompt variable into the playbook using the "Extra CLI Arguments" box on the semaphore task template. Using the -e (extra vars) CLI argument I am passing in the vars that would be prompted for when running the playbook in bash. I use PiBakery instead of the inital setup script now, but I have kept the new-default playbook up to date.
 
     ["-e","hostname='your_hostname' wifi_ssid='your_ssid' wifi_password='your_pass'"]
-
-## Raspbian and RetroPie default Installations
-The first step of my setup workflow is to run the new-default.yml playbook from the playbooks folder.  
-
-This playbook asumes you have the latest version of [RetroPie](https://retropie.org.uk/download/) or [raspbian](https://www.raspberrypi.org/downloads/raspbian/) installed on a SD card and connected to the network via ethernet.
-
-The new-default.yml playbook will do the following for hosts named "raspberrypi" or "retropie":
-
-+ Expand the filesystem
-+ Set Internationalization Options
-    * Language
-    * Keyboard
-    * Culture
-    * Timezone
-+ Setup WiFi
-    * Set WiFi Country
-+ Update and Upgrade apt packages
-+ Set the hostname
-
-You can run the playbook with the following command:
-
-    ansible-playbook -i ~/ansible/hosts playbooks/new-default.yml
-
-The playbook will prompt you for the following items during setup:
-
-+ Hostname
-+ WiFi SSID
-+ WiFi password
 
 ### Alexa Pi Vending Machine
 Housed in the [venduino](http://www.retrobuiltgames.com/diy-kits-shop/venduino/) laser cut wood case there are 5 buttons (4 on the front one on the back), 12 RGB LEDs, 4 continuous rotation servos, an Adafruit servo driver board, a Nokia LCD and a USB CM108 microphone.
