@@ -1,73 +1,25 @@
 # Ansible Playbooks for Raspberry Pi setup
 
-Some simple playbooks, templates and tasks for setup and configuration of my assorted raspberry pi boards and projects. I have found the Ansible [lineinfile](http://docs.ansible.com/ansible/lineinfile_module.html) module is perfect for automating Raspberry Pi setup since most of the configuration is done via text files.
+This is my collection of some simple playbooks, templates and tasks for setup and configuration of my assorted raspberry pi boards and projects. Many common raspberry pi configuration options can now be set using the raspi-config noint mode, for anything else I have found the Ansible [lineinfile](http://docs.ansible.com/ansible/lineinfile_module.html) module is perfect for automating Raspberry Pi setup since much of the configuration is done via text files.
 
-![Astro Pi Playbook Screenshot](https://garthvh.com/assets/img/ansible/ansible_screenshot.png)
+The goal is to do as little manual setup of my raspberry pi projects as possible as well as creating a record of the setup and configuration that can be run again if there is a problem with the SD card, or if I need build another copy of the project. 
 
-The goal is to do as little manual setup of my raspberry pi projects as possible as well as creating a record of the setup and configuration that could be run again if there was a problem with the SD card, or if I build another copy of the project. 
+So far I have found an easy way in Ansible to complete every step of the setup for my projects. There are a ton of well documented modules in ansible and I was able to easily handle apt, many raspi-config options, git, boot/config.txt settings, making reusable tasks and handlers, setting up wifi with a template, and collecting sensitive inputs with prompts.
 
-All of the setup can be done remotely over the network without login, I found that using ethernet was the best way to set up new projects. For Pi Zero and A+ projects without an ethernet port I use a USB ethernet adaptor to do the initial setup. One of the best parts of using ansible for setups is that I can avoid the need to connect a monitor or keyboard for everything but Raspbian Pixel based projects. I have used prompts to collect sensitive data, so it is not stored in the repository.
+##  PiBakery
+The first step now for all devices is setting up the sd card basics with [PiBakery](https://www.pibakery.org/) a code blocks pi sd card setup app which is available on Windows, Mac and Linux.  This lets you configure wifi, a public ssh key, locale, keyboard and hostname without having to connect or power on the pi. My settings for PiBakery are available at [here](https://github.com/garthvh/ansible-raspi-playbooks/blob/master/pibakery/pibakery_new.xml). If your project is not too complex, you may be able to save all the required settings to xml using PiBakery and not even have to use Ansible.  
 
-So far I have found an easy way in Ansible to complete every step of the setup for my projects. There are a ton of well documented modules in ansible and I was able to easily handle apt, git boot/config.txt settings, making reusable tasks and handlers, setting up wifi with a template, installing the SSH key and collecting sensitive inputs with prompts.
+![PiBakery  Screenshot](https://garthvh.com/assets/img/ansible/pibakery.png)
 
 ## Ansible Semaphore
+Semaphore is an open source GUI for ansible that is an alternative to the Ansible Tower product offered by redhat. I run it in a container and prefir it 
+
 ![Semaphore Task Templates Screenshot](https://garthvh.com/assets/img/semaphore/semaphore_task_templates.png)
+
 
 I have been using semaphore and a mariadb database deployed to docker containers on my NAS device.  For playbooks that use vars_prompts I am passing the prompt variable into the playbook using the "Extra CLI Arguments" box on the semaphore task template. Using the -e (extra vars) CLI argument I am passing in the vars that would be prompted for when running the playbook in bash. I use PiBakery instead of the inital setup script now, but I have kept the new-default playbook up to date.
 
     ["-e","hostname='your_hostname' wifi_ssid='your_ssid' wifi_password='your_pass'"]
-
-##  PiBakery and Ansible Semaphore 
-I start all devices by setting up the sd card with [PiBakery](https://www.pibakery.org/).  This lets me do wifi, ssh and hostname before even booting the pi.  My setting for PiBakery are available at [here](/pibakery/pibakery_new.xml) 
-
-
-### Ansible hosts file / Semaphore Inventory
-If you are running ansible from a bash shell you will need to set up an ansible hosts file
-I have an ansible host file ~/ansible/hosts set up with all of my device hostnames.
-
-    # Hostnames for devices 
-
-    [defaultdevices] # Default hostnames for raspbian and retropie devices 
-    retropie
-    raspberrypi
-    [defaultdevices:vars]
-    ansible_user=pi
-    ansible_ssh_pass=raspberry
-
-    [picades]    
-    elsies-arcade
-    markos-arcade
-    [picades:vars]
-    ansible_user=pi
-
-    [pocketpigrrls]
-    elsie-pocket-pigrrl
-    violet-pocket-pigrrl
-    [pocketpigrrls:vars]
-    ansible_user=pi
-
-    [nesclassics]
-    vh-pi-nes
-    plumis-pi-nes
-    millet-pi-nes
-    [nesclassics:vars]
-    ansible_user=pi
-
-    [projects]
-    astro-pi
-    alexa-pi-vending
-    pi-camera-motion
-    pi-camera-timelapse
-    pix-e-gif-cam
-    [projects:vars]
-    ansible_user=pi
-
-    [clusternodes]
-    p[1:4]
-    [clusternodes:vars]
-    ansible_user=pi 
-
-Once the hosts file is in place the ansible controller is all set up and ready to use.
 
 ## Raspbian and RetroPie default Installations
 The first step of my setup workflow is to run the new-default.yml playbook from the playbooks folder.  
