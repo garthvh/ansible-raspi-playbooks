@@ -2,6 +2,8 @@
 
 This is my collection of some pibakery xml, and ansible playbooks for setup and configuration of my assorted raspberry pi projects. Many common raspberry pi configuration options can be set using the raspi-config noint (non-interactive) mode and for anything else I have found the Ansible [lineinfile](http://docs.ansible.com/ansible/lineinfile_module.html) module is perfect for automating configuration that is done via text files.
 
+![Astro Pi Playbook Screenshot](https://garthvh.com/assets/img/ansible/ansible_screenshot.png)
+
 The goal is to do as little manual setup of my raspberry pi projects as possible as well as creating a record of the setup and configuration that can be run again if there is a problem with the SD card, or if I need build more copies of a project. 
 
 There is an easy built in way in Ansible to complete every step of the setup for my projects. There are a ton of well documented modules in ansible and I was able to easily handle apt, many raspi-config options, git, boot/config.txt settings, making reusable tasks and handlers, setting up wifi with a template, and collecting sensitive inputs with prompts.
