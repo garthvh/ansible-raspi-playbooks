@@ -23,17 +23,17 @@
 
     - name: Extract dotnet-sdk-2.2.300-linux-arm.tar.gz into /home/pi/dotnet
       become: yes
-      command: tar zxf dotnet-sdk-2.2.300-linux-arm.tar.gz -C $HOME/dotnet
+      command: tar zxf dotnet-sdk-2.2.300-linux-arm.tar.gz -C /dotnet
 
     - name: link to /usr/local/bin
       become: yes
       command: export DOTNET_ROOT=$HOME/dotnet && export PATH=$PATH:$HOME/dotnet
 
-    - name: Extract aspnetcore-runtime-2.2.5-linux-arm.tar.gz into /home/pi/dotnet
+    - name: Extract aspnetcore-runtime-2.2.5-linux-arm.tar.gz into dotnet
       become: yes
       unarchive:
         src: /home/pi/aspnetcore-runtime-2.2.5-linux-arm.tar.gz
-        dest: /home/pi/dotnet
+        dest: /dotnet
 
     - name: Test the results
       become: yes
