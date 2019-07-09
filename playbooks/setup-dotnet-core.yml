@@ -8,33 +8,31 @@
 
     - name: Download .NET Core Linux ARM 32-bit SDK 
       get_url:
-        url: https://download.visualstudio.microsoft.com/download/pr/9650e3a6-0399-4330-a363-1add761127f9/14d80726c16d0e3d36db2ee5c11928e4/dotnet-sdk-2.2.102-linux-arm.tar.gz
-        dest: /home/pi/dotnet-sdk-2.2.102-linux-arm.tar.gz
+        url: https://download.visualstudio.microsoft.com/download/pr/da881751-01f9-4ea0-8021-0b9c61d0cef6/87c4620dc5af2085d54e9860fad13552/dotnet-sdk-2.2.300-linux-arm.tar.gz
+        dest: /home/pi/dotnet-sdk-2.2.300-linux-arm.tar.gz
 
     - name: Download dotnet core Linux ASP.NET Runtime
       get_url:
-        url: https://download.visualstudio.microsoft.com/download/pr/9d049226-1f28-4d3d-a4ff-314e56b223c5/f67ab05a3d70b2bff46ff25e2b3acd2a/aspnetcore-runtime-2.2.1-linux-arm.tar.gz
-        dest: /home/pi/aspnetcore-runtime-2.2.1-linux-arm.tar.gz
+        url: https://download.visualstudio.microsoft.com/download/pr/cd6635b9-f6f8-4c2d-beda-2e381fe39586/740973b83c199bf863a51c83a2432151/aspnetcore-runtime-2.2.5-linux-arm.tar.gz
+        dest: /home/pi/aspnetcore-runtime-2.2.5-linux-arm.tar.gz
 
     - name: Create a dotnet directory if it does not exist
       file:
         path: /home/pi/dotnet
         state: directory
 
-    - name: Extract dotnet-sdk-2.2.102-linux-arm.tar.gz into /home/pi/dotnet
+    - name: Extract dotnet-sdk-2.2.300-linux-arm.tar.gz into /home/pi/dotnet
       become: yes
-      unarchive:
-        src: /home/pi/dotnet-sdk-2.2.102-linux-arm.tar.gz
-        dest: /home/pi/dotnet
+      command: tar zxf dotnet-sdk-2.2.300-linux-arm.tar.gz -C $HOME/dotnet
 
     - name: link to /usr/local/bin
       become: yes
       command: export DOTNET_ROOT=$HOME/dotnet && export PATH=$PATH:$HOME/dotnet
 
-    - name: Extract aspnetcore-runtime-2.2.1-linux-arm.tar.gz into /home/pi/dotnet
+    - name: Extract aspnetcore-runtime-2.2.5-linux-arm.tar.gz into /home/pi/dotnet
       become: yes
       unarchive:
-        src: /home/pi/aspnetcore-runtime-2.2.1-linux-arm.tar.gz
+        src: /home/pi/aspnetcore-runtime-2.2.5-linux-arm.tar.gz
         dest: /home/pi/dotnet
 
     - name: Test the results
