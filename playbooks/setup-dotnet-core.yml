@@ -5,6 +5,15 @@
 - hosts: pi-dotnet
   gather_facts: yes
   tasks:
+  
+    - name: Install dependancies from apt
+      become: yes
+      apt: name={{item}} state=installed
+      with_items:
+        - curl
+        - libunwind8 
+        - gettext 
+        - apt-transport-https 
 
     - name: Download .NET Core Linux ARM 32-bit SDK 
       get_url:
