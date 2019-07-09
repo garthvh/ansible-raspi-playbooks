@@ -23,7 +23,7 @@
 
     - name: Extract dotnet-sdk-2.2.300-linux-arm.tar.gz into /home/pi/dotnet
       become: yes
-      command: tar zxf dotnet-sdk-2.2.300-linux-arm.tar.gz -C /dotnet
+      command: tar zxf dotnet-sdk-2.2.300-linux-arm.tar.gz -C dotnet
 
     - name: link to /usr/local/bin
       become: yes
