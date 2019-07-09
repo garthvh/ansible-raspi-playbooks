@@ -20,7 +20,7 @@
 
     - name: Create a dotnet directory if it does not exist
       file:
-        path: $HOME/dotnet
+        path: /home/pi/dotnet
         state: directory
         mode: 0755
 
