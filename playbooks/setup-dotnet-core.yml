@@ -25,6 +25,7 @@
         mode: 0755
 
     - name: Extract dotnet-sdk-2.2.102-linux-arm.tar.gz into /home/pi/dotnet
+      become: yes
       unarchive:
         src: /home/pi/dotnet-sdk-2.2.102-linux-arm.tar.gz
         dest: /home/pi/dotnet
@@ -34,6 +35,7 @@
       command: export DOTNET_ROOT=$HOME/dotnet && export PATH=$PATH:$HOME/dotnet
 
     - name: Extract aspnetcore-runtime-2.2.1-linux-arm.tar.gz into /home/pi/dotnet
+      become: yes
       unarchive:
         src: /home/pi/aspnetcore-runtime-2.2.1-linux-arm.tar.gz
         dest: /home/pi/dotnet
