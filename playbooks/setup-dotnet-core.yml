@@ -24,19 +24,19 @@
         state: directory
         mode: 0755
 
-    - name: Extract dotnet-sdk-2.2.102-linux-arm.tar.gz into $HOME/dotnet
+    - name: Extract dotnet-sdk-2.2.102-linux-arm.tar.gz into /home/pi/dotnet
       unarchive:
-        src: $HOME/dotnet-sdk-2.2.102-linux-arm.tar.gz
-        dest: $HOME/dotnet
+        src: /home/pi/dotnet-sdk-2.2.102-linux-arm.tar.gz
+        dest: /home/pi/dotnet
 
     - name: link to /usr/local/bin
       become: yes
       command: export DOTNET_ROOT=$HOME/dotnet && export PATH=$PATH:$HOME/dotnet
 
-    - name: Extract aspnetcore-runtime-2.2.1-linux-arm.tar.gz into $HOME/dotnet
+    - name: Extract aspnetcore-runtime-2.2.1-linux-arm.tar.gz into /home/pi/dotnet
       unarchive:
-        src: $HOME/aspnetcore-runtime-2.2.1-linux-arm.tar.gz
-        dest: $HOME/dotnet
+        src: /home/pi/aspnetcore-runtime-2.2.1-linux-arm.tar.gz
+        dest: /home/pi/dotnet
 
     - name: Test the results
       become: yes
