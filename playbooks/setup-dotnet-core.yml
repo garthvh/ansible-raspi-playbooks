@@ -24,7 +24,6 @@
     - name: Extract dotnet-sdk-2.2.102-linux-arm.tar.gz into /home/pi/dotnet
       become: yes
       unarchive:
-      remote_src: yes
         src: /home/pi/dotnet-sdk-2.2.102-linux-arm.tar.gz
         dest: /home/pi/dotnet
 
