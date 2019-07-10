@@ -4,6 +4,7 @@
 ---
 - hosts: pi-dotnet
   gather_facts: yes
+  vars: user_home:  "{{ lookup('env','HOME') }}"
   tasks:
   
     - name: Install dependancies from apt
@@ -27,24 +28,25 @@
 
     - name: Create a dotnet directory if it does not exist
       file:
-        path: /home/pi/dotnet
+        path: {{ user_home }}/dotnet
         state: directory
 
-    - name: Extract dotnet-sdk-2.2.300-linux-arm.tar.gz into /home/pi/dotnet
+    - name: Extract dotnet-sdk-2.2.300-linux-arm.tar.gz into {{ user_home }}/dotnet
       become: yes
       command: tar zxf dotnet-sdk-2.2.300-linux-arm.tar.gz -C dotnet
 
-    - name: Extract aspnetcore-runtime-2.2.5-linux-arm.tar.gz into /home/pi/dotnet
+    - name: Extract aspnetcore-runtime-2.2.5-linux-arm.tar.gz into {{ user_home }}/dotnet
       become: yes
-      command: tar zxf aspnetcore-runtime-2.2.5-linux-arm.tar.gz -C dotnet
+      command: tar zxf aspnetcore-runtime-2.2.5-linux-arm.tar.gz -C {{ user_home }}/dotnet
 
     - name: Export root path
       become: yes
-      command: export DOTNET_ROOT=$HOME/dotnet
+      command: export DOTNET_ROOT={{ user_home }}/dotnet
+      
 
     - name: Export home path
       become: yes
-      command: export PATH=$PATH:$HOME/dotnet
+      command: export PATH=$PATH:{{ user_home }}/dotnet
 
     - name: Test the results
       become: yes
