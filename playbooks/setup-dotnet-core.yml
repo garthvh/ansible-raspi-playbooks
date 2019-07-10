@@ -39,13 +39,9 @@
       become: yes
       command: 'tar zxf aspnetcore-runtime-2.2.5-linux-arm.tar.gz -C /opt/dotnet'
 
-    - name: Export home path
+    - name: Link the folders
       become: yes
-      command: export PATH=$PATH:/opt/dotnet
-
-    - name: Export root path
-      become: yes
-      command: export DOTNET_ROOT=/opt/dotnet
+      command: ln -s /opt/dotnet/dotnet /usr/local/bin
 
     - name: Test the results
       become: yes
