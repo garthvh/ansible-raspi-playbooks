@@ -29,12 +29,12 @@
 
     - name: Create a dotnet directory if it does not exist
       file:
-        path: '{{ user_home }}'/dotnet
+        path: '{{ user_home }}/dotnet'
         state: directory
 
     - name: Extract dotnet-sdk-2.2.300-linux-arm.tar.gz into {{ user_home }}/dotnet
       become: yes
-      command: tar zxf dotnet-sdk-2.2.300-linux-arm.tar.gz -C dotnet
+      command: tar zxf dotnet-sdk-2.2.300-linux-arm.tar.gz -C $HOME/dotnet
 
     - name: Extract aspnetcore-runtime-2.2.5-linux-arm.tar.gz into $HOME/dotnet
       become: yes
@@ -42,12 +42,12 @@
 
     - name: Export root path
       become: yes
-      command: export DOTNET_ROOT={{ user_home }}/dotnet
+      command: export DOTNET_ROOT=$HOME/dotnet'
       
 
     - name: Export home path
       become: yes
-      command: export PATH=$PATH:{{ user_home }}/dotnet
+      command: export PATH=$PATH:$HOME/dotnet'
 
     - name: Test the results
       become: yes
