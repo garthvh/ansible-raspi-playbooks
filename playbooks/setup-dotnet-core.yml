@@ -20,16 +20,16 @@
     - name: Download .NET Core Linux ARM 32-bit SDK 
       get_url:
         url: https://download.visualstudio.microsoft.com/download/pr/da881751-01f9-4ea0-8021-0b9c61d0cef6/87c4620dc5af2085d54e9860fad13552/dotnet-sdk-2.2.300-linux-arm.tar.gz
-        dest: "{{ user_home }}"/dotnet/dotnet-sdk-2.2.300-linux-arm.tar.gz
+        dest: '{{ user_home }}/dotnet/dotnet-sdk-2.2.300-linux-arm.tar.gz'
 
     - name: Download dotnet core Linux ASP.NET Runtime
       get_url:
         url: https://download.visualstudio.microsoft.com/download/pr/cd6635b9-f6f8-4c2d-beda-2e381fe39586/740973b83c199bf863a51c83a2432151/aspnetcore-runtime-2.2.5-linux-arm.tar.gz
-        dest: "{{ user_home }}"/dotnet/aspnetcore-runtime-2.2.5-linux-arm.tar.gz
+        dest: '{{ user_home }}/dotnet/aspnetcore-runtime-2.2.5-linux-arm.tar.gz'
 
     - name: Create a dotnet directory if it does not exist
       file:
-        path: "{{ user_home }}"/dotnet
+        path: '{{ user_home }}'/dotnet
         state: directory
 
     - name: Extract dotnet-sdk-2.2.300-linux-arm.tar.gz into {{ user_home }}/dotnet
