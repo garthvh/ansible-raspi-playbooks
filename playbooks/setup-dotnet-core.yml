@@ -1,5 +1,5 @@
 # ansible-playbook -v -i ~/ansible/hosts /playbooks/setup-dotnet-core.yml
-# ansible playbook version of the dotnet core installation instructions from Scott Hanselman 
+# ansible playbook version of the dotnet core installation instructions from Scott Hanselman @hanselman
 # https://www.hanselman.com/blog/InstallingTheNETCore2xSDKOnARaspberryPiAndBlinkingAnLEDWithSystemDeviceGpio.aspx
 # Once the script has successfully executed via ansible run: dotnet --info from the command line on the raspi to verify your installation
 
