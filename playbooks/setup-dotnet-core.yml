@@ -31,13 +31,13 @@
         path: /opt/dotnet
         state: directory
 
-    - name: Extract dotnet-sdk-2.2.300-linux-arm.tar.gz into $HOME/dotnet
+    - name: Extract dotnet-sdk-2.2.300-linux-arm.tar.gz into /opt/dotnet
       become: yes
-      command: 'tar zxf dotnet-sdk-2.2.300-linux-arm.tar.gz -C /opt/dotnet'
+      command: tar zxf dotnet-sdk-2.2.300-linux-arm.tar.gz -C /opt/dotnet
 
-    - name: Extract aspnetcore-runtime-2.2.5-linux-arm.tar.gz into $HOME/dotnet
+    - name: Extract aspnetcore-runtime-2.2.5-linux-arm.tar.gz into /opt/dotnet
       become: yes
-      command: 'tar zxf aspnetcore-runtime-2.2.5-linux-arm.tar.gz -C /opt/dotnet'
+      command: tar zxf aspnetcore-runtime-2.2.5-linux-arm.tar.gz -C /opt/dotnet
 
     - name: Link the folders
       become: yes
