@@ -26,6 +26,7 @@
         dest: /home/pi/aspnetcore-runtime-2.2.5-linux-arm.tar.gz
 
     - name: Create a dotnet directory if it does not exist
+      become: yes
       file:
         path: /opt/dotnet
         state: directory
