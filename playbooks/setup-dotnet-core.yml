@@ -39,7 +39,7 @@
     - name: Extract aspnetcore-runtime-2.2.5-linux-arm.tar.gz to /opt/dotnet
       become: yes
       unarchive:
-        src: /home/pi/aspnetcore-runtime-2.2.1-linux-arm.tar.gz
+        src: /home/pi/aspnetcore-runtime-2.2.5-linux-arm.tar.gz
         dest: /opt/dotnet
 
     - name: Link the folders
