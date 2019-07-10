@@ -32,7 +32,7 @@
         path: '{{ user_home }}/dotnet'
         state: directory
 
-    - name: Extract dotnet-sdk-2.2.300-linux-arm.tar.gz into {{ user_home }}/dotnet
+    - name: Extract dotnet-sdk-2.2.300-linux-arm.tar.gz into $HOME/dotnet
       become: yes
       command: tar zxf dotnet-sdk-2.2.300-linux-arm.tar.gz -C $HOME/dotnet
 
@@ -42,12 +42,12 @@
 
     - name: Export root path
       become: yes
-      command: export DOTNET_ROOT=$HOME/dotnet'
+      command: export DOTNET_ROOT=$HOME/dotnet
       
 
     - name: Export home path
       become: yes
-      command: export PATH=$PATH:$HOME/dotnet'
+      command: export PATH=$PATH:$HOME/dotnet
 
     - name: Test the results
       become: yes
