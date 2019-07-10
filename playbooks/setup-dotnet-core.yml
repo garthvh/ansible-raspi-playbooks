@@ -4,7 +4,8 @@
 ---
 - hosts: pi-dotnet
   gather_facts: yes
-  vars: user_home:  "{{ lookup('env','HOME') }}"
+  vars: 
+    user_home:  "{{ lookup('env','HOME') }}"
   tasks:
   
     - name: Install dependancies from apt
