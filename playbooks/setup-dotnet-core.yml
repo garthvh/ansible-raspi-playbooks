@@ -19,7 +19,7 @@
     - name: Download .NET Core Linux ARM 32-bit SDK 
       get_url:
         url: https://download.visualstudio.microsoft.com/download/pr/da881751-01f9-4ea0-8021-0b9c61d0cef6/87c4620dc5af2085d54e9860fad13552/dotnet-sdk-2.2.300-linux-arm.tar.gz
-        dest: /home/pi/dotnet/dotnet-sdk-2.2.300-linux-arm.tar.gz
+        dest: /home/pi/dotnet-sdk-2.2.300-linux-arm.tar.gz
 
     - name: Download dotnet core Linux ASP.NET Runtime
       get_url:
