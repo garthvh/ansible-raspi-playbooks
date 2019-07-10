@@ -34,11 +34,11 @@
 
     - name: Extract dotnet-sdk-2.2.300-linux-arm.tar.gz into $HOME/dotnet
       become: yes
-      command: tar zxf dotnet-sdk-2.2.300-linux-arm.tar.gz -C $HOME/dotnet
+      command: 'tar zxf dotnet-sdk-2.2.300-linux-arm.tar.gz -C {{ user_home }}/dotnet'
 
     - name: Extract aspnetcore-runtime-2.2.5-linux-arm.tar.gz into $HOME/dotnet
       become: yes
-      command: tar zxf aspnetcore-runtime-2.2.5-linux-arm.tar.gz -C $HOME/dotnet
+      command: 'tar zxf aspnetcore-runtime-2.2.5-linux-arm.tar.gz -C {{ user_home }}/dotnet'
 
     - name: Export root path
       become: yes
