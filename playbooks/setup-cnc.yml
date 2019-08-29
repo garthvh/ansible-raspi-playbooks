@@ -1,0 +1,78 @@
+# Modeler, Slicer and Controler for my SainSmart 3018 CNC
+# Installs kiri.moto for slicing and meta.moto for block modeling and starts the node appliction
+# Part of the reccomended setup from https://cnc.js.org/docs/rpi-setup-guide/ for cncjs
+# Not tested on a live pi yet.
+- hosts: pi-cnc
+  vars:
+    nvm.user: "pi"
+    nvm.version: "0.34.0"
+    node.version: "8.16.1"
+  tasks:
+  
+    - name: Install dependancies from apt
+      become: yes
+      apt: name={{item}} state=installed
+      with_items:
+        - build-essential
+        - git
+        - bluetooth 
+        - libbluetooth3
+        - libusb-dev
+
+    - name: Install nvm
+      shell: >
+      curl https://raw.githubusercontent.com/creationix/nvm/v{{ nvm.version }}/install.sh | sh
+      creates=/home/{{ nvm.user }}/.nvm/nvm.sh
+
+    - name: Install node 8 and set version
+      shell: >
+      /bin/bash -c "source ~/.nvm/nvm.sh && nvm install {{ node.version }} && nvm alias default {{ node.version }}"
+      creates=/home/{{ nvm.user }}/.nvm/alias
+
+    - name: Install node-gyp
+      npm:
+        unsafe_perm: yes
+        name: node-gyp
+        global: yes
+
+    - name: Install cncjs
+      npm:
+        unsafe_perm: yes
+        name: cncjs
+        global: yes
+
+    - name: Install cncjs-pendant-ps3
+      npm:
+        unsafe_perm: yes
+        name: cncjs-pendant-ps3
+        global: yes
+
+    - name: Install pm2
+      npm:
+        unsafe_perm: yes
+        name: pm2
+        global: yes
+
+    - name: Startup pm2
+      command: pm2 startup
+
+    - name: run command demanded by pm2 after startup
+      become: yes
+      command: -c "env PATH=$PATH:/home/pi/.nvm/versions/node/{{ node.version }}/bin pm2 startup -u pi --hp /home/pi"
+
+    - name: Start cncjs on port 8000 via pm2
+      command: pm2 start $(which cncjs) -- --port 8000 -m /tinyweb:/home/pi/tinyweb
+
+    - name: Start cncjs-pendant-ps3 via pm2
+      command: pm2 start $(which cncjs-pendant-ps3) -- -p "/dev/ttyUSB0"
+
+    - name: Save running pm2 apps
+      command: pm2 save
+
+    - git: clone grid-apps repo for kiri and meta moto
+        repo: 'https://github.com/GridSpace/grid-apps.git'
+        dest: /home/pi
+      
+    - name: Install grid-apps node app
+      npm:
+        path: /home/pi/grid-apps

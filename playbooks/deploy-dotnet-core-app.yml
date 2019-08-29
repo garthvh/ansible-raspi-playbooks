@@ -1,0 +1,43 @@
+# ansible-playbook -v -i ~/ansible/hosts /playbooks/deploy-dotnet-core-app.yml
+# ansible playbook version of the dotnet core app installation instructions from Scott Hanselman 
+# https://www.hanselman.com/blog/InstallingTheNETCore2xSDKOnARaspberryPiAndBlinkingAnLEDWithSystemDeviceGpio.aspx
+---
+- hosts: pi-dotnet
+  tasks:
+  
+    - name: Install dependancies from apt
+      become: yes
+      apt: name={{item}} state=installed
+      with_items:
+        - curl
+        - libunwind8 
+        - gettext 
+        - apt-transport-https 
+
+    - name: Download .NET Core Linux ARM 32-bit SDK 
+      get_url:
+        url: https://download.visualstudio.microsoft.com/download/pr/da881751-01f9-4ea0-8021-0b9c61d0cef6/87c4620dc5af2085d54e9860fad13552/dotnet-sdk-2.2.300-linux-arm.tar.gz
+        dest: /home/pi/dotnet-sdk-2.2.300-linux-arm.tar.gz
+
+    - name: Download dotnet core Linux ASP.NET Runtime
+      get_url:
+        url: https://download.visualstudio.microsoft.com/download/pr/cd6635b9-f6f8-4c2d-beda-2e381fe39586/740973b83c199bf863a51c83a2432151/aspnetcore-runtime-2.2.5-linux-arm.tar.gz
+        dest: /home/pi/aspnetcore-runtime-2.2.5-linux-arm.tar.gz
+
+    - name: Create a /opt/dotnet directory if it does not exist
+      become: yes
+      file:
+        path: /opt/dotnet
+        state: directory
+
+    - name: Extract dotnet-sdk-2.2.300-linux-arm.tar.gz into /opt/dotnet
+      become: yes
+      command: tar zxf dotnet-sdk-2.2.300-linux-arm.tar.gz -C /opt/dotnet
+
+    - name: Extract aspnetcore-runtime-2.2.5-linux-arm.tar.gz into /opt/dotnet
+      become: yes
+      command: tar zxf aspnetcore-runtime-2.2.5-linux-arm.tar.gz -C /opt/dotnet
+
+    - name: Link the folders
+      become: yes
+      command: ln -s /opt/dotnet/dotnet /usr/local/bin
