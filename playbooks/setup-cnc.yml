@@ -4,9 +4,9 @@
 # Not tested on a live pi yet.
 - hosts: pi-cnc
   vars:
-    nvm.user: "pi"
-    nvm.version: "0.34.0"
-    node.version: "8.16.1"
+    nvmUser: "pi"
+    nvmVersion: "0.34.0"
+    nodeVersion: "8.16.1"
   tasks:
   
     - name: Install dependancies from apt
@@ -21,13 +21,13 @@
 
     - name: Install nvm
       shell: >
-        curl https://raw.githubusercontent.com/creationix/nvm/v{{ nvm.version }}/install.sh | sh
+        curl https://raw.githubusercontent.com/creationix/nvm/v{{ nvmVersion }}/install.sh | sh
         creates=/home/{{ nvm.user }}/.nvm/nvm.sh
 
     - name: Install node 8 and set version
       shell: >
-        /bin/bash -c "source ~/.nvm/nvm.sh && nvm install {{ node.version }} && nvm alias default {{ node.version }}"
-        creates=/home/{{ nvm.user }}/.nvm/alias
+        /bin/bash -c "source ~/.nvm/nvm.sh && nvm install {{ nodeVersion }} && nvm alias default {{ nodeVersion }}"
+        creates=/home/{{ nvmUser }}/.nvm/alias
 
     - name: Install node-gyp
       npm:
@@ -58,7 +58,7 @@
 
     - name: run command demanded by pm2 after startup
       become: yes
-      command: -c "env PATH=$PATH:/home/pi/.nvm/versions/node/{{ node.version }}/bin pm2 startup -u pi --hp /home/pi"
+      command: -c "env PATH=$PATH:/home/pi/.nvm/versions/node/{{ nodeVersion }}/bin pm2 startup -u pi --hp /home/pi"
 
     - name: Start cncjs on port 8000 via pm2
       command: pm2 start $(which cncjs) -- --port 8000 -m /tinyweb:/home/pi/tinyweb
@@ -73,7 +73,7 @@
       git:
         repo: https://github.com/GridSpace/grid-apps.git
         dest: /home/pi
-        
+
     - name: Install grid-apps node app
       npm:
         path: /home/pi/grid-apps
