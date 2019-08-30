@@ -30,8 +30,10 @@
         creates=/home/{{ nvm_user }}/.nvm/alias
 
     - name: Install node-gyp
-      become: yes
-      command: npm install node-gyp -g
+      npm:
+        name: cncjs
+        global: yes
+        executable: /opt/nvm/v8.16.1/bin/npm
 
     - name: Install cncjs
       npm:
