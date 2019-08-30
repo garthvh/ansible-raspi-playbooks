@@ -22,7 +22,7 @@
     - name: Install nvm
       shell: >
         curl https://raw.githubusercontent.com/creationix/nvm/v{{ nvmVersion }}/install.sh | sh
-        creates=/home/{{ nvm.user }}/.nvm/nvm.sh
+        creates=/home/{{ nvmUser }}/.nvm/nvm.sh
 
     - name: Install node 8 and set version
       shell: >
