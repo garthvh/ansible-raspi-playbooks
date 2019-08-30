@@ -69,10 +69,11 @@
     - name: Save running pm2 apps
       command: pm2 save
 
-    - git: clone grid-apps repo for kiri and meta moto
+    - name: clone grid-apps repo for kiri and meta moto
+      git:
         repo: https://github.com/GridSpace/grid-apps.git
         dest: /home/pi
-      
+        
     - name: Install grid-apps node app
       npm:
         path: /home/pi/grid-apps
