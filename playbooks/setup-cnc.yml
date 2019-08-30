@@ -30,7 +30,6 @@
         creates=/home/{{ nvmUser }}/.nvm/alias
 
     - name: Install node-gyp
-      become: yes
       npm:
         name: node-gyp
         global: yes
