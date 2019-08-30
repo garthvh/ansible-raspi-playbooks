@@ -70,7 +70,7 @@
       command: pm2 save
 
     - git: clone grid-apps repo for kiri and meta moto
-        repo: 'https://github.com/GridSpace/grid-apps.git'
+        repo: https://github.com/GridSpace/grid-apps.git
         dest: /home/pi
       
     - name: Install grid-apps node app
