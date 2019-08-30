@@ -30,26 +30,23 @@
         creates=/home/{{ nvmUser }}/.nvm/alias
 
     - name: Install node-gyp
+      become: yes
       npm:
-        unsafe_perm: yes
         name: node-gyp
         global: yes
 
     - name: Install cncjs
       npm:
-        unsafe_perm: yes
         name: cncjs
         global: yes
 
     - name: Install cncjs-pendant-ps3
       npm:
-        unsafe_perm: yes
         name: cncjs-pendant-ps3
         global: yes
 
     - name: Install pm2
       npm:
-        unsafe_perm: yes
         name: pm2
         global: yes
 
