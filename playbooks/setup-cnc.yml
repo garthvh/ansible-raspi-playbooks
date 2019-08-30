@@ -4,7 +4,7 @@
 # Not tested on a live pi yet.
 - hosts: pi-cnc
   vars:
-    nvm-_user: "pi"
+    nvm_user: "pi"
     nvm_version: "0.34.0"
     node_version: "8.16.1"
   tasks:
