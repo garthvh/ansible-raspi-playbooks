@@ -21,7 +21,7 @@
 
     - name: Install nvm
       shell: >
-      curl https://raw.githubusercontent.com/creationix/nvm/v{{ nvm.version }}/install.sh | sh
+      curl https://raw.githubusercontent.com/creationix/nvm/v"{{ nvm.version }}"/install.sh | sh
       creates=/home/{{ nvm.user }}/.nvm/nvm.sh
 
     - name: Install node 8 and set version
@@ -76,3 +76,14 @@
     - name: Install grid-apps node app
       npm:
         path: /home/pi/grid-apps
+
+    - name: Download sixpair.c 
+      get_url:
+        url: http://www.pabr.org/sixlinux/sixpair.c
+        dest: /home/pi/sixpair.c
+        mode: '0440'
+
+    - name: Build sixpair
+      command: gcc -o sixpair sixpair.c -lusb
+
+
