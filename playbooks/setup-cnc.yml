@@ -29,12 +29,6 @@
         /bin/bash -c "source ~/.nvm/nvm.sh && nvm install {{ node_version }} && nvm alias default {{ node_version }}"
         creates=/home/{{ nvm_user }}/.nvm/alias
 
-    - name: Install node-gyp
-      npm:
-        name: cncjs
-        global: yes
-        executable: /opt/nvm/v8.16.1/bin/npm
-
     - name: Install cncjs
       npm:
         name: cncjs

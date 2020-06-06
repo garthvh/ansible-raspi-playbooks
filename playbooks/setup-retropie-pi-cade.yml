@@ -24,10 +24,6 @@
       - regexp: "^#?overscan_scale"
         line: "overscan_scale=1"
 
-      # Enable 1200ma USB current to power screen
-      - regexp: "^#?max_usb_current"
-        line: "max_usb_current=1"
-
     rc_local_options:
       # Disable HDMI on startup (for power savings).
       - regexp: "^/usr/local/bin/retrogame"
